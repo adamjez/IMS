@@ -42,6 +42,21 @@ public:
 	vector<Structure *> Run();
 };
 
+class TrafficParser
+{
+
+private:
+	string _fileName;
+	ifstream * _readFile;
+public:
+	TrafficParser(string filename)
+		: _fileName(filename)
+	{
+
+	}
+	vector<pair<pair<int, int>, float>> Run();
+};
+
 void getFirstBySecond(vector<pair<int, int>> *vec, int second, vector<int> *out);
 void getSecondByFirst(vector<pair<int, int>> *vec, int first, vector<int> *out);
 void getNext(vector<pair<int, int>> *vec, int item, vector<vector<pair<int, int>>> *out);

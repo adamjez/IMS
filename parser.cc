@@ -133,7 +133,6 @@ vector<Structure *> StructuresParser::Run()
 	vector<Structure *> result;
 
 	_readFile = new ifstream(_fileName);
-	//ifstream->open();
 
 	while(_readFile->good())
 	{
@@ -143,13 +142,13 @@ vector<Structure *> StructuresParser::Run()
 		{
 			case tunnel:
 			{
-				Tunnel * tun = new Tunnel(x, 5*30);
+				Tunnel * tun = new Tunnel(name, x);
 				structure = (Structure*)tun;
 				break;
 			}
 			case chamber:
 			{
-				Chamber * cham = new Chamber(name.c_str(), x, 5*30);
+				Chamber * cham = new Chamber(name, x, 5*30);
 				structure = (Structure*)cham;
 				break;
 			}
@@ -173,8 +172,8 @@ vector<Structure *> StructuresParser::Run()
 			}
 			case bridge:
 			{
-				Tunnel * tun = new Tunnel(x, 5*30);
-				structure = (Structure*)tun;
+				Bridge * brid = new Bridge(name, x);
+				structure = (Structure*)brid;
 				break;
 			}
 			default:
@@ -182,8 +181,27 @@ vector<Structure *> StructuresParser::Run()
 
 
 		}
-		structure->setName(name);
 		result.push_back(structure);
+	}
+
+	_readFile->close();
+
+	return result;
+}
+
+vector<pair<pair<int, int>, float>> TrafficParser::Run()
+{
+	int id1, id2;
+	float x;
+	vector<pair<pair<int, int>, float>> result;
+
+	_readFile = new ifstream(_fileName);
+
+	while(_readFile->good())
+	{
+		(*_readFile) >> id1 >> ws >> id2 >> ws >> x >> ws;
+
+		result.push_back(make_pair(make_pair(id1, id2),x));
 	}
 
 	_readFile->close();

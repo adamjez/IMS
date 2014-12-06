@@ -8,9 +8,16 @@
 
 #include "simlib.h"
 #include "constants.h"
+#include "limits.h"
 #include <iostream>
 
+
 using namespace  std;
+
+void ActivateQueue(Queue *q, int max = INT_MAX);
+const char *converToAscii(string letter);
+
+
 
 class Timeout : public Event {
 	public:
@@ -43,6 +50,7 @@ enum STRUCTURE {
 // Cargo ship as process
 class CargoShip : public Process {
 	private:
+		double _arrived = Time;
 		int _from = 0;
 		int _to = 18;
 		bool _dir = true;
@@ -53,6 +61,10 @@ class CargoShip : public Process {
 		bool getDirection()
 		{
 			return _dir;
+		}
+		int getArrivedTime()
+		{
+			return _arrived;
 		}
 		void Behavior();
 		void Timeout()
@@ -70,37 +82,52 @@ class CargoShip : public Process {
 
 // base class for all structures
 class Structure {
-	protected:
-		std::string _name;
+protected:
+	Histogram *_table = NULL;
 	public:
-		virtual ~Structure() {};
+		~Structure() {
+			if(_table != NULL)
+			{
+				_table->Output();
+				delete _table;
+			}
+			delete Q1;
+			delete Q2;
+		};
 		virtual int getType() = 0;
-		void setName(std::string name)
+		double Start()
 		{
-			_name = name;
+			return Time;
 		}
+
+		double End(double time)
+		{
+			(*_table)(Time - time);
+		}
+
+		Queue *Q1 = new Queue();
+		Queue *Q2 = new Queue();
+
 
 };
 
 // Chamber as facility
-class Chamber : public Facility, public Structure {
+class Chamber : public Structure {
 	private:
 		float _height;
 		int _waitTime;
 		int _fillTime;
 		bool _pos;
 		Timeout _tm;
+
 		CargoShip *in = NULL;
-		Histogram *_table;
+
 	public:
-		Queue *Q3 = new Queue();
-	public:
-		Chamber(const char* name, float height, float waitTime) 
+		Chamber(string name, float height, float waitTime) 
 			: _height(height), _waitTime(waitTime), _pos(Random() > 0.5) 
 		{
 
-			std::cout << "Vytvarim komoru " << std::endl;
-			_table = new Histogram(name,0,1000,20); 
+			_table = new Histogram(converToAscii(string("Komora: " +name)),0,1000,20); 
 
 			if (_height > DIFF_CHAMBER_METER)
 				_fillTime = _height * TIME_METER_LARGE_CHAMBER;
@@ -113,22 +140,8 @@ class Chamber : public Facility, public Structure {
 		{
 			return chamber;
 		}
-		virtual ~Chamber()
-		{
-			_table->Output();
-			delete Q3;
-		}
 
-		double Start()
-		{
-			return Time;
-			(*_table)(Time - in->Prichod);
-		}
 
-		double End(double time)
-		{
-			(*_table)(Time - time);
-		}
 
 		void PerformAction();
 		void Seize(CargoShip *ship);
@@ -136,63 +149,73 @@ class Chamber : public Facility, public Structure {
 };
 
 
-class Tunnel;
-// Cargo ship as process
-class ChangeDirection : public Event {
-	private:
-		Tunnel *_tun;
-		int _interval;
-	public:
-		ChangeDirection(Tunnel * tunnel, int interval) 
-		: Event(),_tun(tunnel), _interval(interval)
-		{ }
-
-		void Behavior();
-};
-
 
 // Chamber as facility
-class Tunnel : public Structure, public Facility {
+class Tunnel : public Structure {
 	private:
+		int _in = 0;
 		float _len;
 		int _waitTime;
 		int _crossTime;
 		bool _pos;
-		long _waitTo = 0;
-		bool _activated = false;
-		ChangeDirection *chDir;
-	public:
-		Queue *Q3 = new Queue();
-	public:
-		Tunnel(int len, float waitTime) 
-			: _len(len), _waitTime(waitTime), _pos(true) 
-		{
-			_crossTime = _len / SPEED_IN_TUNNEL;
-	
-		}
+		long _waitFor = 0;
 
-		void Activate()
+	public:
+		Tunnel(string name, int len) 
+			: _len(len),  _pos(Random() > 0.5) 
 		{
-			chDir = new ChangeDirection(this, _waitTime + _crossTime);
-			chDir->Activate();
-			_activated = true;
+			//Vytvorime histogram pro tunel
+			_table = new Histogram(converToAscii(string("Tunel: " +name)),0,1000,20); 
+			// Doba za kterou lod prepluje tunel
+			_crossTime = _len / SPEED_IN_TUNNEL;
+			// Pro kolik lodi se ceka
+			_waitFor = _len < DIFF_TUNNEL_METER ? 1 : 3; 
 		}
 
 		virtual int getType()
 		{
 			return tunnel;
 		}
-		~Tunnel()
-		{
-			delete Q3;
-			if(_activated)
-				delete chDir;
-		}
+
 		void ChangeDir();
 		void PerformAction(CargoShip *ship);
 		void Seize(CargoShip *ship);
 		void Release();
-		void ActivateQueue(Queue *q);
+		
+};
+
+// Chamber as facility
+// Chamber as facility
+class Bridge : public Structure {
+	private:
+		int _in = 0;
+		float _len;
+		int _waitTime;
+		int _crossTime;
+		bool _pos;
+		long _waitFor;
+
+	public:
+		Bridge(string name, int len) 
+			: _len(len), _pos(Random() > 0.5) 
+		{
+			_table = new Histogram(converToAscii(string("Most: " +name)),0,1000,20);
+
+			_crossTime = _len / SPEED_IN_BRIDGE;
+
+			_waitFor = _len < DIFF_BRIDGE_METER ? 1 : 3; 
+		}
+
+
+		virtual int getType()
+		{
+			return tunnel;
+		}
+
+		void ChangeDir();
+		void PerformAction(CargoShip *ship);
+		void Seize(CargoShip *ship);
+		void Release();
 		
 };
 

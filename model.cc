@@ -8,12 +8,11 @@
 
 
  // global objects: 
-//Chamber Chamber("Cernotin", 22, 30*60); 
-
-Histogram Table2("Tunel",0,100,20); 
-//Tunnel Tunnel(500, 5*60);
+Histogram ShipTable("Lode", 0, 10000, 100);
 vector<pair<int, int>> Map;
 vector<Structure *> Info;
+vector<pair<pair<int, int>, float>> Traffic;
+
 
 class Generator : public Event { // model of system's input 
 	void Behavior() { // --- behavior specification ---
@@ -34,14 +33,18 @@ int main() { // experiment description
 	StructuresParser parser2("input/info.tsv");
 	Info = parser2.Run();
 
-	std::cout << "Pocet: " << Info.size() << std::endl;
+
+	TrafficParser parser3("input/ship-VYSOKY-2020.tsv");
+	Traffic = parser3.Run();
+
+	//std::cout << "Pocet: " << Info.size() << std::endl;
 	/*std::cout << "Hledam cestu z: " << 34 << " do: " << 30 << std::endl;
 	auto test = findNext(&Map, 34, 30);
 	std::cout << "Dalsi prvek je: " << test << std::endl;*/
 
 	RandomSeed(time(0));
 
-	Init(0,100000); // experiment initialization for time 0..1000 
+	Init(0,365*24*60*60); // experiment initialization for time 0..1000 
 
 	(new Generator)->Activate(); // customer generator 
 	Run(); // simulation Box.Output(); // print of results 
@@ -51,8 +54,7 @@ int main() { // experiment description
 	{
 		delete item;
 	}
-	
-	Table2.Output();
+	ShipTable.Output();
 
 	return 0; 
 }
@@ -67,7 +69,7 @@ void Chamber::Seize(CargoShip *ship)
 		if(ship->getDirection())
 			Q1->Insert(ship);
 		else
-			Q3->Insert(ship);
+			Q2->Insert(ship);
 
 		ship->Passivate();
 
@@ -77,7 +79,7 @@ void Chamber::Seize(CargoShip *ship)
 		if(ship->getDirection())
 			Q1->Insert(ship);
 		else
-			Q3->Insert(ship);
+			Q2->Insert(ship);
 
 		if(_tm.Idle())
 		{
@@ -93,8 +95,8 @@ void Chamber::Seize(CargoShip *ship)
 	// Delete self from Queue
 	/*if(ship->getDirection() && Q1->front() == ship)
 		Q1->GetFirst();
-	else if(Q3->front() == ship)
-		Q3->GetFirst();
+	else if(Q2->front() == ship)
+		Q2->GetFirst();
 	*/
 
 	if(ship->isInQueue())
@@ -135,19 +137,19 @@ void Chamber::Release()
 		{
 			(Q1->GetFirst())->Activate();
 		}
-		else if(Q3->Length() > 0)
+		else if(Q2->Length() > 0)
 		{
 			//std::cout << "ACTIVATE1" << std::endl;
-			_tm.SetProc(Q3->front());
+			_tm.SetProc(Q2->front());
 			_tm.Activate(Time + _waitTime);
 			//std::cout << "ACTIVATE2" << std::endl;
 		}
 	}
 	else
 	{
-		if(Q3->Length() > 0)
+		if(Q2->Length() > 0)
 		{
-			(Q3->GetFirst())->Activate();
+			(Q2->GetFirst())->Activate();
 		}
 		else if(Q1->Length() > 0)
 		{
@@ -165,28 +167,32 @@ void Chamber::Release()
 
 void Tunnel::Seize(CargoShip *ship)
 {
-	if(!_activated)
-	{
-		Activate(); // hack protoze nejde aktivovat event v konstruktoru
-	}
-
-
-start:
-	// Jestli jeste muzu jet a lod jede ve spravnem smeru
-	if(_waitTo > Time && ship->getDirection() == _pos)
-		return;
-
-	// Jestli je lod nahore -> vlozit do horni fronty a opak
+	// Jestli je lod ve predu -> vlozit do predni fronty a opak
 	if(ship->getDirection())
+	{
 		Q1->Insert(ship);
+		// Jestli je lodi dostatek a je smer vpohode
+		if(_in == 0 && Q1->Length() == _waitFor && _pos == ship->getDirection())
+		{
+			ActivateQueue(Q1);
+			goto goIn;
+		}
+	}
 	else
-		Q3->Insert(ship);
+	{
+		Q2->Insert(ship);
+		// Jestli je lodi dostatek a je smer vpohode
+		if(_in == 0 && Q2->Length() == _waitFor && _pos == ship->getDirection())
+		{
+			ActivateQueue(Q2);
+			goto goIn;
+		}
+	}
 
 	ship->Passivate();
 
-
-	goto start;
-
+goIn:
+	_in++;
 }
 
 void Tunnel::PerformAction(CargoShip *ship)
@@ -198,43 +204,97 @@ void Tunnel::PerformAction(CargoShip *ship)
 
 void Tunnel::Release()
 {
+	_in--;
+	// Uz nikdo neni na moste, povolime vjeti dalsim
+	if(_in == 0)
+	{
+		if(_pos && Q1->Length() > _waitFor)
+		{
+			ActivateQueue(Q1, _waitFor);
+		}
+		else if(Q2->Length() > _waitFor)
+		{
+			ActivateQueue(Q2, _waitFor);
+		}
+	}
 	std::cout << "RELEASE_TUNEL" << std::endl;
 }
 
-void Tunnel::ActivateQueue(Queue *q)
+
+
+void Bridge::Seize(CargoShip *ship)
+{
+
+	// Jestli je lod ve predu -> vlozit do predni fronty a opak
+	if(ship->getDirection())
+	{
+		Q1->Insert(ship);
+		// Jestli je lodi dostatek a je smer vpohode
+		if(_in == 0 && Q1->Length() == _waitFor && _pos == ship->getDirection())
+		{
+			ActivateQueue(Q1);
+			goto goIn;
+		}
+	}
+	else
+	{
+		Q2->Insert(ship);
+		// Jestli je lodi dostatek a je smer vpohode
+		if(_in == 0 && Q2->Length() == _waitFor && _pos == ship->getDirection())
+		{
+			ActivateQueue(Q2);
+			goto goIn;
+		}
+	}
+
+	ship->Passivate();
+
+goIn:
+	_in++;
+}
+
+void Bridge::PerformAction(CargoShip *ship)
+{
+	std::cout << "PERFORM_BRIDGE: "<< _crossTime << std::endl;
+	ship->Wait(_crossTime);
+}
+
+
+void Bridge::Release()
+{
+	_in--;
+	// Uz nikdo neni na moste, povolime vjeti dalsim
+	if(_in == 0)
+	{
+		if(_pos && Q1->Length() > _waitFor)
+		{
+			ActivateQueue(Q1, _waitFor);
+		}
+		else if(Q2->Length() > _waitFor)
+		{
+			ActivateQueue(Q2, _waitFor);
+		}
+	}
+	std::cout << "RELEASE_BRIDGE" << std::endl;
+}
+
+void ActivateQueue(Queue *q, int max)
 {
 	for(int i = 0; i < q->Length(); i++)
 		(q->GetFirst())->Activate();
 }
 
-void Tunnel::ChangeDir()
+const char * converToAscii(string letter)
 {
-	//std::cout << "MENIM DIRECTION " << std::endl;
-			
-			
-	_pos = !_pos;
-
-	_waitTo = _waitTime + Time;
-	// Delete self from Queue
-	if(_pos)
-		ActivateQueue(Q1);
-	else 
-		ActivateQueue(Q3);
-
-	//std::cout << "WAITTO " << _waitTo<< std::endl;
-
+	char * result = new char[letter.length()];
+	for(int i = 0; i < letter.length(); i++)
+	{
+		result[i] = letter.at(i);
+	}
+	return result;
 }
 
-void ChangeDirection::Behavior()
-{
 
-	if(_tun != NULL)
-		_tun->ChangeDir();
-
-	//std::cout << "Aktivuju za: " << (Time + _interval) << std::endl;
-	Activate(Time + _interval);
-	
-}
 
 void CargoShip::Behavior()
 {
@@ -272,26 +332,38 @@ void CargoShip::Behavior()
 		switch(struc->getType())
 		{
 			case tunnel:
-			case bridge:
 			{
 				Tunnel * tun = (Tunnel *)struc;
+				Prichod = tun->Start();
 
 				tun->Seize(this);
-
 				tun->PerformAction(this);
-
 				tun->Release();
+
+				tun->End(Prichod);
+				break;
+			}
+			case bridge:
+			{
+				Bridge * brid = (Bridge *)struc;
+				Prichod = brid->Start();
+
+				brid->Seize(this);
+				brid->PerformAction(this);
+				brid->Release();
+
+				brid->End(Prichod);
 				break;
 			}
 			case chamber:
 			{
 				Chamber * cham = (Chamber *)struc;
 				Prichod = cham->Start();
+
 				cham->Seize(this); // start of service 
-
 				cham->PerformAction();
-
 				cham->Release(); // end of service 
+
 				cham->End(Prichod);
 				break;
 			}
@@ -300,7 +372,7 @@ void CargoShip::Behavior()
 				Port * port = (Port *)struc;
 				if(_cur == _to)
 				{
-					Table2(Time-Prichod); // waiting and service time 
+					ShipTable(Time-getArrivedTime()); 
 					return;
 				}
 				
