@@ -34,11 +34,10 @@ int main() { // experiment description
 	StructuresParser parser2("input/info.tsv");
 	Info = parser2.Run();
 
-
-	auto test = findNext(&Map, 0, 7);
+	std::cout << "Hledam cestu z: " << 34 << " do: " << 30 << std::endl;
+	auto test = findNext(&Map, 34, 30);
 	std::cout << "Dalsi prvek je: " << test << std::endl;
-	/*for(auto conn = test.begin(); conn != test.end(); ++conn)
-		std::cout << conn->first << "  " << conn->second << std::endl;*/
+
 	RandomSeed(time(0));
 
 	Init(0,100000); // experiment initialization for time 0..1000 
@@ -204,7 +203,7 @@ void Tunnel::ActivateQueue(Queue *q)
 
 void Tunnel::ChangeDir()
 {
-	std::cout << "MENIM DIRECTION " << std::endl;
+	//std::cout << "MENIM DIRECTION " << std::endl;
 			
 			
 	_pos = !_pos;
@@ -216,7 +215,7 @@ void Tunnel::ChangeDir()
 	else 
 		ActivateQueue(Q3);
 
-	std::cout << "WAITTO " << _waitTo<< std::endl;
+	//std::cout << "WAITTO " << _waitTo<< std::endl;
 
 }
 
@@ -233,43 +232,103 @@ void ChangeDirection::Behavior()
 
 void CargoShip::Behavior()
 {
-	vector<int> next{};
+
+	auto Prichod = Time;
+
 	Structure *struc;
+	int next;
+
+	_cur = _from;
 	while(true)
 	{
 
-		if(_dir)
+		next = findNext(&Map, _cur, _to);
+		_dir = next > _cur ? true : false;
+
+		_cur = next;
+		/*if(_dir)
 			getSecondByFirst(&Map, _cur, &next);
 		else
-			getFirstBySecond(&Map, _cur, &next);
+			getFirstBySecond(&Map, _cur, &next);*/
 
-		if(next.empty())
+		if(_cur < 0)
 			break;
 
-		if(next.size() == 1)
-			struc = Info.at(next.front());
+
+		struc = Info.at(_cur);
+
+		switch(struc->getType())
+		{
+			case tunnel:
+			case bridge:
+			{
+				/*Tunnel * tun = (Tunnel *)struc;
+
+				tun->Seize(this);
+
+				tun->PerformAction(this);
+
+				tun->Release();*/
+				break;
+			}
+			case chamber:
+			{
+				Chamber * cham = (Chamber *)struc;
+				Prichod = cham->Start();
+				cham->Seize(this); // start of service 
+
+				cham->PerformAction();
+
+				cham->Release(); // end of service 
+				cham->End(Prichod);
+				break;
+			}
+			case port:
+			{
+				Port * port = (Port *)struc;
+				if(_cur == _to)
+				{
+					Table2(Time-Prichod); // waiting and service time 
+					return;
+				}
+				
+				break;
+			}
+			case channel:
+			{
+				Channel * chan = (Channel *)struc;
+
+				chan->PerformAction(this);
+				break;
+			}
+			case river:
+			{
+				River * riv = (River *)struc;
+
+				riv->PerformAction(this);
+				break;
+			}
+			default:
+				break;
+		}
+
 
 	}
-
+/*
 	Prichod = Chamber.Start();
 	Chamber.Seize(this); // start of service 
 
 	Chamber.PerformAction();
 
 	Chamber.Release(); // end of service 
-	Chamber.End(Prichod);
+	Chamber.End(Prichod);*/
 
 	//Table1(Time-Prichod); // waiting and service time 
 
-	std::cout << "Time at Seize: " << Time << std::endl;
+	/*std::cout << "Time at Seize: " << Time << std::endl;
 	Prichod = Time; 
 
-	Tunnel.Seize(this);
-
-	Tunnel.PerformAction(this);
-
-	Tunnel.Release();
 	
-	Table2(Time-Prichod); // waiting and service time 
+	Table2(Time-Prichod); // waiting and service time */
 	
 }

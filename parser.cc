@@ -47,50 +47,63 @@ int findNext(vector<pair<int, int>> *vec, int from, int to)
 
 	getNext(vec, from, &result);
 
-	/*vector<int> found{from};
-	vector<int> next{};*/
+	for(auto path = result.begin(); path != result.end(); ++path)
+	{	
+		cout << path->front().first << "  " << path->front().second << endl;
+	}
+
+	int size; 
+	bool change;
 	while(true)
 	{
+		change = false;
 		for(auto path = result.begin(); path != result.end(); ++path)
 		{
+			size = path->size();
+
+			auto find = path->back();
+
+			if(find.first == to || find.second == to)
+			{
+				// Nasli jsme cestu, vratime id dalsiho prvku
+				auto item = path->front();
+				cout << "Nasli jsme: " << item.first << "  " << item.second << endl;
+				if(item.first == from)
+					return item.second;
+				else
+					return item.first;
+
+			}
+			cout << "posledni: " << find.first << "  " << find.second << endl;
 			for(auto conn = vec->begin(); conn != vec->end(); ++conn)
 			{
-				if(conn->first == to || conn->second == to)
-				{
-					// Nasli jsme cestu, vratime id dalsiho prvku
-					auto item = path->front();
-					if(item.first == from)
-						return item.second;
-					else
-						return item.first;
 
+	
+				if(from < to && conn->first == find.second && conn->second != find.first)
+				{ 
+					// Nasli jsem cestu
+					path->push_back(make_pair(conn->first, conn->second));
+					//cout << "MAM: " << find.first << "  " << find.second << " Pridavam: " << conn->first << "  " << conn->second << endl;
 				}
-				auto last = path->back();
-				if(conn->first == last.second && conn->second != last.first)
+
+				if(from > to && conn->second == find.first && conn->first != find.second)
 				{
 					// Nasli jsem cestu
 					path->push_back(make_pair(conn->first, conn->second));
+					//cout << "MAM: " << find.first << "  " << find.second << " Pridavam: " << conn->first << "  " << conn->second << endl;
 				}
-
-				if(conn->second == last.first && conn->first != last.second)
-				{
-					// Nasli jsem cestu
-					path->push_back(make_pair(conn->first, conn->second));
-				}
-
-				/*
-				if(conn->first == id)
-					 next->push_back(conn->second);
-				if(conn->second == id)
-					next->push_back(conn->first);*/
 			}	
+
+			if(size != path->size())
+				change = true;
+
 
 
 		}
 
 
 
-		if(result.empty())
+		if(!change)
 			break;
 	}
 
@@ -103,7 +116,6 @@ vector<pair<int, int>> ConnectionParser::Run()
 	vector<pair<int, int>> result;
 
 	_readFile = new ifstream(_fileName);
-	//ifstream->open();
 
 	while(_readFile->good())
 	{

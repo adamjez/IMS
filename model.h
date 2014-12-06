@@ -66,7 +66,7 @@ class CargoShip : public Process {
 
 };
 
-class Tunnel;
+
 
 // base class for all structures
 class Structure {
@@ -135,7 +135,7 @@ class Chamber : public Facility, public Structure {
 
 
 
-
+class Tunnel;
 // Cargo ship as process
 class ChangeDirection : public Event {
 	private:
@@ -151,7 +151,7 @@ class ChangeDirection : public Event {
 
 
 // Chamber as facility
-class Tunnel : public Facility, public Structure {
+class Tunnel : public Structure, public Facility {
 	private:
 		float _len;
 		int _waitTime;
