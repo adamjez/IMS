@@ -285,6 +285,7 @@ void CargoShip::Behavior()
 			}
 			case port:
 			{
+				Chamber * cham = (Chamber *)struc;
 				Port * port = (Port *)struc;
 				if(_cur == _to)
 				{
