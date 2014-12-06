@@ -96,8 +96,10 @@ class Chamber : public Facility, public Structure {
 		Queue *Q3 = new Queue();
 	public:
 		Chamber(const char* name, float height, float waitTime) 
-			: _height(height), _waitTime(waitTime), _pos(true) 
+			: _height(height), _waitTime(waitTime), _pos(Random() > 0.5) 
 		{
+
+			std::cout << "Vytvarim komoru " << std::endl;
 			_table = new Histogram(name,0,1000,20); 
 
 			if (_height > DIFF_CHAMBER_METER)
@@ -132,7 +134,6 @@ class Chamber : public Facility, public Structure {
 		void Seize(CargoShip *ship);
 		void Release();
 };
-
 
 
 class Tunnel;
