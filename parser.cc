@@ -47,10 +47,10 @@ int findNext(vector<pair<int, int>> *vec, int from, int to)
 
 	getNext(vec, from, &result);
 
-	for(auto path = result.begin(); path != result.end(); ++path)
+	/*for(auto path = result.begin(); path != result.end(); ++path)
 	{	
 		cout << path->front().first << "  " << path->front().second << endl;
-	}
+	}*/
 
 	int size; 
 	bool change;
@@ -67,14 +67,14 @@ int findNext(vector<pair<int, int>> *vec, int from, int to)
 			{
 				// Nasli jsme cestu, vratime id dalsiho prvku
 				auto item = path->front();
-				cout << "Nasli jsme: " << item.first << "  " << item.second << endl;
+				//cout << "Nasli jsme: " << item.first << "  " << item.second << endl;
 				if(item.first == from)
 					return item.second;
 				else
 					return item.first;
 
 			}
-			cout << "posledni: " << find.first << "  " << find.second << endl;
+			//cout << "posledni: " << find.first << "  " << find.second << endl;
 			for(auto conn = vec->begin(); conn != vec->end(); ++conn)
 			{
 
@@ -97,11 +97,7 @@ int findNext(vector<pair<int, int>> *vec, int from, int to)
 			if(size != path->size())
 				change = true;
 
-
-
 		}
-
-
 
 		if(!change)
 			break;

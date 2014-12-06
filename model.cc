@@ -8,10 +8,10 @@
 
 
  // global objects: 
-Chamber Chamber("Cernotin", 22, 30*60); 
+//Chamber Chamber("Cernotin", 22, 30*60); 
 
 Histogram Table2("Tunel",0,100,20); 
-Tunnel Tunnel(500, 5*60);
+//Tunnel Tunnel(500, 5*60);
 vector<pair<int, int>> Map;
 vector<Structure *> Info;
 
@@ -20,7 +20,7 @@ class Generator : public Event { // model of system's input
 
 	(new CargoShip)->Activate(); // new customer 
 
-	Activate(Time+Exponential(1e4)); // 
+	//Activate(Time+Exponential(1e4)); // 
 } 
 }; 
 
@@ -34,9 +34,10 @@ int main() { // experiment description
 	StructuresParser parser2("input/info.tsv");
 	Info = parser2.Run();
 
-	std::cout << "Hledam cestu z: " << 34 << " do: " << 30 << std::endl;
+	std::cout << "Pocet: " << Info.size() << std::endl;
+	/*std::cout << "Hledam cestu z: " << 34 << " do: " << 30 << std::endl;
 	auto test = findNext(&Map, 34, 30);
-	std::cout << "Dalsi prvek je: " << test << std::endl;
+	std::cout << "Dalsi prvek je: " << test << std::endl;*/
 
 	RandomSeed(time(0));
 
@@ -45,6 +46,11 @@ int main() { // experiment description
 	(new Generator)->Activate(); // customer generator 
 	Run(); // simulation Box.Output(); // print of results 
 	std::cout << "KONEC" << std::endl;
+	
+	for(auto &item : Info)
+	{
+		delete item;
+	}
 	
 	Table2.Output();
 
@@ -241,11 +247,13 @@ void CargoShip::Behavior()
 	_cur = _from;
 	while(true)
 	{
-
+		cout << "From: " << _cur << " To: " << _to << endl;
 		next = findNext(&Map, _cur, _to);
 		_dir = next > _cur ? true : false;
 
 		_cur = next;
+
+		cout << "Next: " << next << endl;
 		/*if(_dir)
 			getSecondByFirst(&Map, _cur, &next);
 		else
@@ -255,6 +263,10 @@ void CargoShip::Behavior()
 			break;
 
 
+
+		if(_cur >= Info.size())
+			return;
+
 		struc = Info.at(_cur);
 
 		switch(struc->getType())
@@ -262,13 +274,13 @@ void CargoShip::Behavior()
 			case tunnel:
 			case bridge:
 			{
-				/*Tunnel * tun = (Tunnel *)struc;
+				Tunnel * tun = (Tunnel *)struc;
 
 				tun->Seize(this);
 
 				tun->PerformAction(this);
 
-				tun->Release();*/
+				tun->Release();
 				break;
 			}
 			case chamber:
