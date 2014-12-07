@@ -29,17 +29,30 @@ class Timeout : public Event {
 				_proc->Activate();
 				Cancel();
 			}
+			else if(_queue != NULL)
+			{
+				ActivateQueue(_queue, _max);
+				Cancel();
+			}
+		}
+
+		void SetQueue(Queue * que, int max)
+		{
+			_queue = que;
+			_max = max;
 		}
 		void SetProc(Entity * proc)
 		{
 			_proc = proc;
 		}
 	private:
-		Entity *_proc;
+		Entity *_proc = NULL;
+		Queue *_queue = NULL;
+		int _max;
 };
 
 enum STRUCTURE {
-	tunnel = 0,		// Tunel i most
+	tunnel = 0,	// Tunel
 	chamber,	// Plavebni komora
 	port,		// Pristav
 	channel,	// Kanal - stejna rychlost v obou smerech
@@ -130,7 +143,7 @@ class Chamber : public Structure {
 			: _height(height), _waitTime(waitTime), _pos(Random() < 0.5) 
 		{
 
-			_table = new Histogram(converToAscii(string("Komora: " +name)),0,1000,20); 
+			_table = new Histogram(converToAscii(string("Komora: " +name)),0,200,20); 
 
 			if (_height > DIFF_CHAMBER_METER)
 				_fillTime = _height * TIME_METER_LARGE_CHAMBER;
@@ -153,7 +166,7 @@ class Chamber : public Structure {
 
 
 
-// Chamber as facility
+// Tunnel
 class Tunnel : public Structure {
 	private:
 		int _in = 0;
@@ -162,17 +175,20 @@ class Tunnel : public Structure {
 		int _crossTime;
 		bool _pos;
 		long _waitFor = 0;
+		Timeout _tm;
 
 	public:
 		Tunnel(string name, int len) 
-			: _len(len),  _pos(Random() < 0.5) 
+			: _len(len), _pos(Random() < 0.5)
 		{
 			//Vytvorime histogram pro tunel
-			_table = new Histogram(converToAscii(string("Tunel: " +name)),0,1000,20); 
+			_table = new Histogram(converToAscii(string("Tunel: " +name)),0,500,20); 
 			// Doba za kterou lod prepluje tunel
 			_crossTime = _len / SPEED_IN_TUNNEL;
 			// Pro kolik lodi se ceka
 			_waitFor = _len < DIFF_TUNNEL_METER ? 1 : 3; 
+
+			_waitTime = 2*_crossTime * _waitFor;
 		}
 
 		virtual int getType()
@@ -187,8 +203,7 @@ class Tunnel : public Structure {
 		
 };
 
-// Chamber as facility
-// Chamber as facility
+// Bridge
 class Bridge : public Structure {
 	private:
 		int _in = 0;
@@ -197,16 +212,20 @@ class Bridge : public Structure {
 		int _crossTime;
 		bool _pos;
 		long _waitFor;
+		Timeout _tm;
+
 
 	public:
 		Bridge(string name, int len) 
-			: _len(len), _pos(Random() < 0.5) 
+			: _len(len), _pos(Random() < 0.5)
 		{
-			_table = new Histogram(converToAscii(string("Most: " +name)),0,1000,20);
+			_table = new Histogram(converToAscii(string("Most: " +name)),0,200,20);
 
 			_crossTime = _len / SPEED_IN_BRIDGE;
 
 			_waitFor = _len < DIFF_BRIDGE_METER ? 1 : 3; 
+
+			_waitTime = 2*_crossTime * _waitFor;
 		}
 
 

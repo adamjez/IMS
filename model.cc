@@ -67,7 +67,7 @@ int main() { // experiment description
 
 	for(auto &item : Traffic)
 	{
-		int diff = ((item.second * 1000) / 4000) / sedcondsInYear; //((Pocet tun k prevezeni) Pocet lodi)
+		int diff = sedcondsInYear / (item.second / 4) ; //((Pocet tun k prevezeni) Pocet lodi)
 		(new Generator(diff, item.first.first, item.first.second))->Activate(); // customer generator 
 	}
 
@@ -192,37 +192,60 @@ void Chamber::Release()
 
 void Tunnel::Seize(CargoShip *ship)
 {
+	auto test = Time;
 	// Jestli je lod ve predu -> vlozit do predni fronty a opak
 	if(ship->getDirection())
 	{
 		Q1->Insert(ship);
+
 		// Jestli je lodi dostatek a je smer vpohode
 		if(_in == 0 && Q1->Length() == _waitFor && _pos == ship->getDirection())
 		{
 			ActivateQueue(Q1);
 			goto goIn;
 		}
+		else
+		{
+			if(_tm.Idle())
+			{
+				_tm.SetQueue(Q1, _waitFor);
+				_tm.Activate(Time + _waitTime);
+			}
+		}
 	}
 	else
 	{
 		Q2->Insert(ship);
+
 		// Jestli je lodi dostatek a je smer vpohode
 		if(_in == 0 && Q2->Length() == _waitFor && _pos == ship->getDirection())
 		{
 			ActivateQueue(Q2);
 			goto goIn;
 		}
+		else
+		{
+			if(_tm.Idle())
+			{
+				_tm.SetQueue(Q2, _waitFor);
+				_tm.Activate(Time + _waitTime);
+			}
+		}
 	}
 
 	ship->Passivate();
+	//cout << "Prestal jsem cekat v case: " << (Time - test) << endl;
+	if(ship->isInQueue())
+		ship->Out();
 
 goIn:
 	_in++;
+	_tm.Cancel();
 }
 
 void Tunnel::PerformAction(CargoShip *ship)
 {
-	std::cout << "PERFORM_TUNEL: "<< _crossTime << std::endl;
+	//std::cout << "PERFORM_TUNEL: "<< _crossTime << std::endl;
 	ship->Wait(_crossTime);
 }
 
@@ -230,19 +253,36 @@ void Tunnel::PerformAction(CargoShip *ship)
 void Tunnel::Release()
 {
 	_in--;
-	// Uz nikdo neni na moste, povolime vjeti dalsim
+	// Uz nikdo neni v tunelu, povolime vjeti dalsim
 	if(_in == 0)
 	{
-		if(_pos && Q1->Length() > _waitFor)
+		_pos = !_pos;
+		if(_pos)
 		{
-			ActivateQueue(Q1, _waitFor);
+			if(Q1->Length() >= _waitFor)
+			{
+				ActivateQueue(Q1, _waitFor);
+			}
+			else if(Q1->Length() > 0)
+			{
+				_tm.SetQueue(Q1, _waitFor);
+				_tm.Activate(Time + _waitTime);
+			}
 		}
-		else if(Q2->Length() > _waitFor)
+		else 
 		{
-			ActivateQueue(Q2, _waitFor);
+			if(Q2->Length() >= _waitFor)
+			{
+				ActivateQueue(Q2, _waitFor);
+			}
+			else if(Q2->Length() > 0)
+			{
+				_tm.SetQueue(Q2, _waitFor);
+				_tm.Activate(Time + _waitTime);
+			}
 		}
 	}
-	std::cout << "RELEASE_TUNEL" << std::endl;
+	//std::cout << "RELEASE_TUNEL" << std::endl;
 }
 
 
@@ -260,6 +300,14 @@ void Bridge::Seize(CargoShip *ship)
 			ActivateQueue(Q1);
 			goto goIn;
 		}
+		else
+		{
+			if(_tm.Idle())
+			{
+				_tm.SetQueue(Q1, _waitFor);
+				_tm.Activate(Time + _waitTime);
+			}
+		}
 	}
 	else
 	{
@@ -270,17 +318,32 @@ void Bridge::Seize(CargoShip *ship)
 			ActivateQueue(Q2);
 			goto goIn;
 		}
+		else
+		{
+			if(_tm.Idle())
+			{
+				_tm.SetQueue(Q2, _waitFor);
+				_tm.Activate(Time + _waitTime);
+			}
+		}
 	}
 
 	ship->Passivate();
 
+
+	if(ship->isInQueue())
+		ship->Out();
+
 goIn:
 	_in++;
+	_tm.Cancel();
 }
 
 void Bridge::PerformAction(CargoShip *ship)
 {
-	std::cout << "PERFORM_BRIDGE: "<< _crossTime << std::endl;
+	//if(_pos != ship->getDirection())
+	_pos = ship->getDirection();
+	//std::cout << "PERFORM_BRIDGE: "<< _crossTime << std::endl;
 	ship->Wait(_crossTime);
 }
 
@@ -291,21 +354,39 @@ void Bridge::Release()
 	// Uz nikdo neni na moste, povolime vjeti dalsim
 	if(_in == 0)
 	{
-		if(_pos && Q1->Length() > _waitFor)
+		_pos = !_pos;
+		if(_pos)
 		{
-			ActivateQueue(Q1, _waitFor);
+			if(Q1->Length() > _waitFor)
+			{
+				ActivateQueue(Q1, _waitFor);
+			}
+			else if(Q1->Length() > 0)
+			{
+				_tm.SetQueue(Q1, _waitFor);
+				_tm.Activate(Time + _waitTime);
+			}
 		}
-		else if(Q2->Length() > _waitFor)
+		else 
 		{
-			ActivateQueue(Q2, _waitFor);
+			if(Q2->Length() > _waitFor)
+			{
+				ActivateQueue(Q2, _waitFor);
+			}
+			else if(Q2->Length() > 0)
+			{
+				_tm.SetQueue(Q2, _waitFor);
+				_tm.Activate(Time + _waitTime);
+			}
 		}
 	}
-	std::cout << "RELEASE_BRIDGE" << std::endl;
+	//std::cout << "RELEASE_BRIDGE" << std::endl;
 }
 
 void ActivateQueue(Queue *q, int max)
 {
-	for(int i = 0; i < q->Length(); i++)
+	int to = max > q->Length() ? q->Length() : max;
+	for(int i = 0; i < to; i++)
 		(q->GetFirst())->Activate();
 }
 
@@ -323,7 +404,7 @@ const char * converToAscii(string letter)
 
 void CargoShip::Behavior()
 {
-
+	//cout << "VyJEL JSEM" << endl;
 	auto Prichod = Time;
 
 	Structure *struc;
@@ -337,8 +418,8 @@ void CargoShip::Behavior()
 		_dir = next > _cur ? true : false;
 
 		_cur = next;
-
 		//cout << "Next: " << next << endl;
+		//
 		/*if(_dir)
 			getSecondByFirst(&Map, _cur, &next);
 		else
@@ -347,7 +428,7 @@ void CargoShip::Behavior()
 		if(_cur < 0)
 			break;
 
-
+		//cout << "Next: " << next << endl;
 
 		if(_cur >= Info.size())
 			return;
@@ -358,18 +439,22 @@ void CargoShip::Behavior()
 		{
 			case tunnel:
 			{
+				//cout << "Tunel: " << _cur << endl;
 				Tunnel * tun = (Tunnel *)struc;
 				Prichod = tun->Start();
-
+//cout << "Tunel3" << endl;
 				tun->Seize(this);
+				//cout << "Tunel4" << endl;
 				tun->PerformAction(this);
 				tun->Release();
-
+//cout << "Tunel4" << endl;
 				tun->End(Prichod);
+				//cout << "Tunel2" << endl;
 				break;
 			}
 			case bridge:
 			{
+				//cout << "Most1" << endl;
 				Bridge * brid = (Bridge *)struc;
 				Prichod = brid->Start();
 
@@ -378,10 +463,12 @@ void CargoShip::Behavior()
 				brid->Release();
 
 				brid->End(Prichod);
+				//cout << "Most2" << endl;
 				break;
 			}
 			case chamber:
 			{
+				//cout << "Komora1" << endl;
 				Chamber * cham = (Chamber *)struc;
 				Prichod = cham->Start();
 
@@ -390,31 +477,38 @@ void CargoShip::Behavior()
 				cham->Release(); // end of service 
 
 				cham->End(Prichod);
+				//cout << "Komora2" << endl;
 				break;
 			}
 			case port:
 			{
+				//cout << "Port1" << endl;
 				Port * port = (Port *)struc;
 				if(_cur == _to)
 				{
+					//cout << "DOJEL JSEM" << endl;
 					ShipTable(Time-getArrivedTime()); 
 					return;
 				}
-				
+				//cout << "Port2" << endl;
 				break;
 			}
 			case channel:
 			{
+				//cout << "Kanal1" << endl;
 				Channel * chan = (Channel *)struc;
 
 				chan->PerformAction(this);
+				//cout << "Kanal2" << endl;
 				break;
 			}
 			case river:
 			{
+				//cout << "Reka1" << endl;
 				River * riv = (River *)struc;
 
 				riv->PerformAction(this);
+				//cout << "Reka2" << endl;
 				break;
 			}
 			default:
