@@ -1,7 +1,11 @@
-///////////////////////
-//	IMS projekt
-//	Autor: xjezad00
-///////////////////////
+/**
+ * @file 	parser.h
+ * @author	Adam Jez (xjezad00@stud.fit.vutbr.cz)
+ * @author	Roman Blanco (xblanc01@stud.fit.vutbr.cz)
+ * @date 	7.12.2014
+ * @brief	Hlavicky soubor pro tridy, ktere parsuji zdrojove
+ *			soubory a vraci je ve vektoru
+ */
 
 #include <iostream>
 #include <fstream>
@@ -10,6 +14,11 @@
 
 using namespace  std;
 
+/**
+ * @class 	ConnectionParser
+ * @brief	Trida parsujici zdrojovy soubor se spojenim
+ *			spojeni - dvojce ID od, do
+ */
 class ConnectionParser
 {
 
@@ -27,6 +36,11 @@ public:
 
 };
 
+/**
+ * @class 	StructuresParser
+ * @brief	Trida parsujici zdrojovy soubor s objekty
+ *			objekt - most, tunel, reka apod.
+ */
 class StructuresParser
 {
 
@@ -42,6 +56,11 @@ public:
 	vector<Structure *> Run();
 };
 
+/**
+ * @class 	TrafficParser
+ * @brief	Trida parsujici zdrojovy soubor s provozem
+ *			ve formatu [OD] [DO] [pocet tisic tun za rok]
+ */
 class TrafficParser
 {
 
