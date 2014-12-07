@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<net xmlns="http://pdv.cs.tu-berlin.de/TimeNET/schema/eDSPN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="0" netclass="eDSPN" xsi:schemaLocation="http://pdv.cs.tu-berlin.de/TimeNET/schema/eDSPN etc/schemas/eDSPN.xsd">
+<place id="FRONTA1" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="270" y="90"/>
+<label id="LFRONTA1" text="FRONTA1" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="FRONTA2" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="195" y="450"/>
+<label id="LFRONTA2" text="FRONTA2" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="PŘEČERPÁNÍ2" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="345" y="360"/>
+<label id="LPŘEČERPÁNÍ2" text="PŘEČERPÁNÍ2" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="P3" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="480" y="450"/>
+<label id="LP3" text="P3" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="HOTOVO2" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="675" y="450"/>
+<label id="LHOTOVO2" text="HOTOVO2" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="HLADINA" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="345" y="285"/>
+<label id="LHLADINA" text="HLADINA" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="P6" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="375" y="225"/>
+<label id="LP6" text="P6" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="PŘEČERPÁNÍ1" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="330" y="150"/>
+<label id="LPŘEČERPÁNÍ1" text="PŘEČERPÁNÍ1" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="VPLUTÍANAPUŠTĚNÍ" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="465" y="90"/>
+<label id="LVPLUTÍANAPUŠTĚNÍ" text="VPLUTÍANAPUŠTĚNÍ" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="HOTOVO1" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="675" y="90"/>
+<label id="LHOTOVO1" text="HOTOVO1" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<immediateTransition id="VSTUP1" priority="1" type="node" weight="1">
+<graphics orientation="0" x="90" y="90"/>
+<label id="LVSTUP1" text="VSTUP1" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="VSTUP2" priority="1" type="node" weight="1">
+<graphics orientation="0" x="90" y="450"/>
+<label id="LVSTUP2" text="VSTUP2" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="T2" priority="1" type="node" weight="1">
+<graphics orientation="0" x="375" y="90"/>
+<label id="LT2" text="T2" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="30MPH" priority="1" type="node" weight="1">
+<graphics orientation="0" x="195" y="150"/>
+<label id="L30MPH" text="30MPH" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="ČAS" priority="1" type="node" weight="1">
+<graphics orientation="0" x="435" y="150"/>
+<label id="LČAS" text="ČAS" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="ČAS" priority="1" type="node" weight="1">
+<graphics orientation="0" x="570" y="90"/>
+<label id="LČAS" text="ČAS" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="VÝSTUP1" priority="1" type="node" weight="1">
+<graphics orientation="0" x="795" y="90"/>
+<label id="LVÝSTUP1" text="VÝSTUP1" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="30MPH" priority="1" type="node" weight="1">
+<graphics orientation="0" x="195" y="360"/>
+<label id="L30MPH" text="30MPH" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="T8" priority="1" type="node" weight="1">
+<graphics orientation="0" x="270" y="450"/>
+<label id="LT8" text="T8" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="ČAS" priority="1" type="node" weight="1">
+<graphics orientation="0" x="435" y="360"/>
+<label id="LČAS" text="ČAS" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="ČAS" priority="1" type="node" weight="1">
+<graphics orientation="0" x="570" y="450"/>
+<label id="LČAS" text="ČAS" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="VÝSTUP2" priority="1" type="node" weight="1">
+<graphics orientation="0" x="795" y="450"/>
+<label id="LVÝSTUP2" text="VÝSTUP2" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<arc fromNode="VSTUP2" id="VSTUP2toFRONTA2" toNode="FRONTA2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IVSTUP2toFRONTA2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="FRONTA2" id="FRONTA2to30MPH" toNode="30MPH" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IFRONTA2to30MPH" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="FRONTA2" id="FRONTA2toT8" toNode="T8" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IFRONTA2toT8" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="T8" id="T8toP3" toNode="P3" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IT8toP3" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="P3" id="P3toČAS" toNode="ČAS" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IP3toČAS" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="ČAS" id="ČAStoHOTOVO2" toNode="HOTOVO2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IČAStoHOTOVO2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="HOTOVO2" id="HOTOVO2toVÝSTUP2" toNode="VÝSTUP2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IHOTOVO2toVÝSTUP2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="ČAS" id="ČAStoP3" toNode="P3" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IČAStoP3" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="PŘEČERPÁNÍ2" id="PŘEČERPÁNÍ2toČAS" toNode="ČAS" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IPŘEČERPÁNÍ2toČAS" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="30MPH" id="30MPHtoPŘEČERPÁNÍ2" toNode="PŘEČERPÁNÍ2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="I30MPHtoPŘEČERPÁNÍ2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="HLADINA" id="HLADINAto30MPH" toNode="30MPH" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IHLADINAto30MPH" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="HLADINA" id="HLADINAtoT8" toNode="T8" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IHLADINAtoT8" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="VSTUP1" id="VSTUP1toFRONTA1" toNode="FRONTA1" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IVSTUP1toFRONTA1" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="FRONTA1" id="FRONTA1to30MPH" toNode="30MPH" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IFRONTA1to30MPH" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="FRONTA1" id="FRONTA1toT2" toNode="T2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IFRONTA1toT2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="T2" id="T2toVPLUTÍANAPUŠTĚNÍ" toNode="VPLUTÍANAPUŠTĚNÍ" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IT2toVPLUTÍANAPUŠTĚNÍ" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="VPLUTÍANAPUŠTĚNÍ" id="VPLUTÍANAPUŠTĚNÍtoČAS" toNode="ČAS" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IVPLUTÍANAPUŠTĚNÍtoČAS" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="ČAS" id="ČAStoHOTOVO1" toNode="HOTOVO1" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IČAStoHOTOVO1" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="HOTOVO1" id="HOTOVO1toVÝSTUP1" toNode="VÝSTUP1" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IHOTOVO1toVÝSTUP1" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="ČAS" id="ČAStoVPLUTÍANAPUŠTĚNÍ" toNode="VPLUTÍANAPUŠTĚNÍ" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IČAStoVPLUTÍANAPUŠTĚNÍ" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="PŘEČERPÁNÍ1" id="PŘEČERPÁNÍ1toČAS" toNode="ČAS" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IPŘEČERPÁNÍ1toČAS" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="30MPH" id="30MPHtoPŘEČERPÁNÍ1" toNode="PŘEČERPÁNÍ1" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="I30MPHtoPŘEČERPÁNÍ1" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="ČAS" id="ČAStoP6" toNode="P6" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IČAStoP6" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="P6" id="P6toT2" toNode="T2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IP6toT2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="P6" id="P6to30MPH" toNode="30MPH" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IP6to30MPH" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="ČAS" id="ČAStoHLADINA" toNode="HLADINA" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IČAStoHLADINA" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+</net>

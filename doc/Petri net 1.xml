@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<net xmlns="http://pdv.cs.tu-berlin.de/TimeNET/schema/eDSPN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="0" netclass="eDSPN" xsi:schemaLocation="http://pdv.cs.tu-berlin.de/TimeNET/schema/eDSPN etc/schemas/eDSPN.xsd">
+<place id="DOTUNELU" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="165" y="60"/>
+<label id="LDOTUNELU" text="DOTUNELU" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="KAPACITA2" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="375" y="240"/>
+<label id="LKAPACITA2" text="KAPACITA2" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="KAPACITA1" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="375" y="60"/>
+<label id="LKAPACITA1" text="KAPACITA1" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="P2" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="570" y="35"/>
+<label id="LP2" text="P2" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="P3" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="780" y="60"/>
+<label id="LP3" text="P3" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="P4" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="165" y="240"/>
+<label id="LP4" text="P4" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="P6" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="570" y="270"/>
+<label id="LP6" text="P6" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="P7" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="780" y="240"/>
+<label id="LP7" text="P7" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="SMĚR1" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="495" y="150"/>
+<label id="LSMĚR1" text="SMĚR1" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="SMĚR2" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="645" y="150"/>
+<label id="LSMĚR2" text="SMĚR2" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<immediateTransition id="ČAS" priority="1" type="node" weight="1">
+<graphics orientation="0" x="675" y="240"/>
+<label id="LČAS" text="ČAS" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="T1" priority="1" type="node" weight="1">
+<graphics orientation="0" x="270" y="60"/>
+<label id="LT1" text="T1" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="T2" priority="1" type="node" weight="1">
+<graphics orientation="0" x="465" y="60"/>
+<label id="LT2" text="T2" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="RYCHLOSTxDELKA" priority="1" type="node" weight="1">
+<graphics orientation="0" x="675" y="60"/>
+<label id="LRYCHLOSTxDELKA" text="RYCHLOSTxDELKA" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="T6" priority="1" type="node" weight="1">
+<graphics orientation="0" x="270" y="240"/>
+<label id="LT6" text="T6" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="T7" priority="1" type="node" weight="1">
+<graphics orientation="0" x="465" y="240"/>
+<label id="LT7" text="T7" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="VSTUP1" priority="1" type="node" weight="1">
+<graphics orientation="0" x="60" y="60"/>
+<label id="LVSTUP1" text="VSTUP1" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="VSTUP2" priority="1" type="node" weight="1">
+<graphics orientation="0" x="60" y="240"/>
+<label id="LVSTUP2" text="VSTUP2" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="ZTUNELU1" priority="1" type="node" weight="1">
+<graphics orientation="0" x="885" y="60"/>
+<label id="LZTUNELU1" text="ZTUNELU1" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<immediateTransition id="ZTUNELU2" priority="1" type="node" weight="1">
+<graphics orientation="0" x="885" y="240"/>
+<label id="LZTUNELU2" text="ZTUNELU2" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</immediateTransition>
+<arc fromNode="ČAS" id="ČAStoP7" toNode="P7" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IČAStoP7" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="ČAS" id="ČAStoSMĚR1" toNode="SMĚR1" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IČAStoSMĚR1" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="P3" id="P3toZTUNELU1" toNode="ZTUNELU1" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IP3toZTUNELU1" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="P6" id="P6toČAS" toNode="ČAS" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IP6toČAS" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="P7" id="P7toZTUNELU2" toNode="ZTUNELU2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IP7toZTUNELU2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="SMĚR1" id="SMĚR1toT2" toNode="T2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="ISMĚR1toT2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="SMĚR2" id="SMĚR2toT7" toNode="T7" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="ISMĚR2toT7" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="T1" id="T1toKAPACITA1" toNode="KAPACITA1" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IT1toKAPACITA1" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="T2" id="T2toP2" toNode="P2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IT2toP2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="RYCHLOSTxDELKA" id="T3toP3" toNode="P3" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IT3toP3" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="RYCHLOSTxDELKA" id="T3toSMĚR2" toNode="SMĚR2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IT3toSMĚR2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="VSTUP1" id="VSTUP1toDOTUNELU" toNode="DOTUNELU" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IVSTUP1toDOTUNELU" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="VSTUP2" id="VSTUP2toP4" toNode="P4" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IVSTUP2toP4" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="DOTUNELU" id="DOTUNELUtoT1" toNode="T1" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IDOTUNELUtoT1" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="T7" id="T7toP6" toNode="P6" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IT7toP6" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="P4" id="P4toT6" toNode="T6" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IP4toT6" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="KAPACITA1" id="KAPACITA1toT2" toNode="T2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IKAPACITA1toT2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="KAPACITA2" id="KAPACITA2toT7" toNode="T7" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IKAPACITA2toT7" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="P2" id="P2toRYCHLOSTxDELKA" toNode="RYCHLOSTxDELKA" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IP2toRYCHLOSTxDELKA" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+<arc fromNode="T6" id="T6toKAPACITA2" toNode="KAPACITA2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IT6toKAPACITA2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<graphics x="0" y="0"/>
+</inscription>
+</arc>
+</net>
