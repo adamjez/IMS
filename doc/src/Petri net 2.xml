@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
+<net id="Net-One" type="P/T net">
+<token id="Default" enabled="true" red="0" green="0" blue="0"/>
+<place id="FRONTA 1">
+<graphics>
+<position x="270.0" y="90.0"/>
+</graphics>
+<name>
+<value>FRONTA 1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="FRONTA 2">
+<graphics>
+<position x="195.0" y="450.0"/>
+</graphics>
+<name>
+<value>FRONTA 2</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="HLADINA">
+<graphics>
+<position x="345.0" y="285.0"/>
+</graphics>
+<name>
+<value>HLADINA</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="HOTOVO 1">
+<graphics>
+<position x="675.0" y="90.0"/>
+</graphics>
+<name>
+<value>HOTOVO 1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="HOTOVO 2">
+<graphics>
+<position x="675.0" y="450.0"/>
+</graphics>
+<name>
+<value>HOTOVO 2</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="P3">
+<graphics>
+<position x="480.0" y="450.0"/>
+</graphics>
+<name>
+<value>P3</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="P6">
+<graphics>
+<position x="375.0" y="225.0"/>
+</graphics>
+<name>
+<value>P6</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="P&#344;E&#268;ERPÁNÍ 1">
+<graphics>
+<position x="330.0" y="150.0"/>
+</graphics>
+<name>
+<value>P&#344;E&#268;ERPÁNÍ 1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="P&#344;E&#268;ERPÁNÍ 2">
+<graphics>
+<position x="345.0" y="360.0"/>
+</graphics>
+<name>
+<value>P&#344;E&#268;ERPÁNÍ 2</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="VPLUTÍ A NAPU&#352;T&#282;NÍ">
+<graphics>
+<position x="465.0" y="90.0"/>
+</graphics>
+<name>
+<value>VPLUTÍ A NAPU&#352;T&#282;NÍ</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<transition id="30 MPH">
+<graphics>
+<position x="195.0" y="150.0"/>
+</graphics>
+<name>
+<value>30 MPH</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="30 MPH ">
+<graphics>
+<position x="195.0" y="360.0"/>
+</graphics>
+<name>
+<value>30 MPH </value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="&#268;AS">
+<graphics>
+<position x="570.0" y="450.0"/>
+</graphics>
+<name>
+<value>&#268;AS</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="&#268;AS ">
+<graphics>
+<position x="435.0" y="150.0"/>
+</graphics>
+<name>
+<value>&#268;AS </value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="&#268;AS  ">
+<graphics>
+<position x="570.0" y="90.0"/>
+</graphics>
+<name>
+<value>&#268;AS  </value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="&#268;AS    ">
+<graphics>
+<position x="435.0" y="360.0"/>
+</graphics>
+<name>
+<value>&#268;AS    </value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="T2">
+<graphics>
+<position x="375.0" y="90.0"/>
+</graphics>
+<name>
+<value>T2</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="T8">
+<graphics>
+<position x="270.0" y="450.0"/>
+</graphics>
+<name>
+<value>T8</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="VSTUP 1">
+<graphics>
+<position x="90.0" y="90.0"/>
+</graphics>
+<name>
+<value>VSTUP 1</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="VSTUP 2">
+<graphics>
+<position x="90.0" y="450.0"/>
+</graphics>
+<name>
+<value>VSTUP 2</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="VÝSTUP 1">
+<graphics>
+<position x="795.0" y="90.0"/>
+</graphics>
+<name>
+<value>VÝSTUP 1</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="VÝSTUP 2">
+<graphics>
+<position x="795.0" y="450.0"/>
+</graphics>
+<name>
+<value>VÝSTUP 2</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<arc id="30 MPH to P&#344;E&#268;ERPÁNÍ 1" source="30 MPH" target="P&#344;E&#268;ERPÁNÍ 1">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="212" y="161" curvePoint="false"/>
+<arcpath id="001" x="327" y="161" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="30 MPH  to P&#344;E&#268;ERPÁNÍ 2" source="30 MPH " target="P&#344;E&#268;ERPÁNÍ 2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="211" y="377" curvePoint="false"/>
+<arcpath id="001" x="342" y="372" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="&#268;AS   to HLADINA" source="&#268;AS  " target="HLADINA">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="576" y="107" curvePoint="false"/>
+<arcpath id="001" x="368" y="287" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="&#268;AS   to HOTOVO 1" source="&#268;AS  " target="HOTOVO 1">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="586" y="102" curvePoint="false"/>
+<arcpath id="001" x="672" y="102" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="&#268;AS to HOTOVO 2" source="&#268;AS" target="HOTOVO 2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="586" y="462" curvePoint="false"/>
+<arcpath id="001" x="672" y="462" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="&#268;AS     to P3" source="&#268;AS    " target="P3">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="447" y="387" curvePoint="false"/>
+<arcpath id="001" x="484" y="449" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="&#268;AS to P6" source="&#268;AS" target="P6">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="577" y="457" curvePoint="false"/>
+<arcpath id="001" x="396" y="248" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="&#268;AS  to VPLUTÍ A NAPU&#352;T&#282;NÍ" source="&#268;AS " target="VPLUTÍ A NAPU&#352;T&#282;NÍ">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="447" y="147" curvePoint="false"/>
+<arcpath id="001" x="468" y="114" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="FRONTA 1 to 30 MPH" source="FRONTA 1" target="30 MPH">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="270" y="111" curvePoint="false"/>
+<arcpath id="001" x="212" y="154" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="FRONTA 1 to T2" source="FRONTA 1" target="T2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="296" y="102" curvePoint="false"/>
+<arcpath id="001" x="381" y="102" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="FRONTA 2 to 30 MPH " source="FRONTA 2" target="30 MPH ">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="207" y="447" curvePoint="false"/>
+<arcpath id="001" x="207" y="387" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="FRONTA 2 to T8" source="FRONTA 2" target="T8">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="221" y="462" curvePoint="false"/>
+<arcpath id="001" x="276" y="462" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="HLADINA to 30 MPH" source="HLADINA" target="30 MPH">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="345" y="287" curvePoint="false"/>
+<arcpath id="001" x="211" y="168" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="HLADINA to T8" source="HLADINA" target="T8">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="350" y="310" curvePoint="false"/>
+<arcpath id="001" x="282" y="447" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="HOTOVO 1 to VÝSTUP 1" source="HOTOVO 1" target="VÝSTUP 1">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="701" y="102" curvePoint="false"/>
+<arcpath id="001" x="801" y="102" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="HOTOVO 2 to VÝSTUP 2" source="HOTOVO 2" target="VÝSTUP 2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="701" y="462" curvePoint="false"/>
+<arcpath id="001" x="801" y="462" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="P3 to &#268;AS" source="P3" target="&#268;AS">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="506" y="463" curvePoint="false"/>
+<arcpath id="001" x="576" y="467" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="P6 to 30 MPH " source="P6" target="30 MPH ">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="374" y="245" curvePoint="false"/>
+<arcpath id="001" x="212" y="367" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="P6 to T2" source="P6" target="T2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="387" y="222" curvePoint="false"/>
+<arcpath id="001" x="387" y="117" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="P&#344;E&#268;ERPÁNÍ 1 to &#268;AS " source="P&#344;E&#268;ERPÁNÍ 1" target="&#268;AS ">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="356" y="162" curvePoint="false"/>
+<arcpath id="001" x="441" y="162" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="P&#344;E&#268;ERPÁNÍ 2 to &#268;AS    " source="P&#344;E&#268;ERPÁNÍ 2" target="&#268;AS    ">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="371" y="372" curvePoint="false"/>
+<arcpath id="001" x="441" y="372" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="T2 to VPLUTÍ A NAPU&#352;T&#282;NÍ" source="T2" target="VPLUTÍ A NAPU&#352;T&#282;NÍ">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="391" y="102" curvePoint="false"/>
+<arcpath id="001" x="462" y="102" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="T8 to P3" source="T8" target="P3">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="286" y="462" curvePoint="false"/>
+<arcpath id="001" x="477" y="462" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="VPLUTÍ A NAPU&#352;T&#282;NÍ to &#268;AS  " source="VPLUTÍ A NAPU&#352;T&#282;NÍ" target="&#268;AS  ">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="491" y="101" curvePoint="false"/>
+<arcpath id="001" x="577" y="97" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="VSTUP 1 to FRONTA 1" source="VSTUP 1" target="FRONTA 1">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="106" y="102" curvePoint="false"/>
+<arcpath id="001" x="267" y="102" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="VSTUP 2 to FRONTA 2" source="VSTUP 2" target="FRONTA 2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="106" y="462" curvePoint="false"/>
+<arcpath id="001" x="192" y="462" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+</net>
+</pnml>
