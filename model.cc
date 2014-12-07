@@ -15,11 +15,29 @@ vector<pair<pair<int, int>, float>> Traffic;
 
 
 class Generator : public Event { // model of system's input 
+	private:
+		int _diff;
+		int _place1;
+		int _place2;
+	public:
+	Generator(int diff, int place1, int place2)
+	 : _diff(diff), _place1(place1), _place2(place2)
+	{}
+
 	void Behavior() { // --- behavior specification ---
+	int from, to;
+	if(Random() < 0.5)
+	{
+		from = _place1; to = _place2;
+	}
+	else
+	{
+		from = _place2; to = _place1;
+	}
 
-	(new CargoShip)->Activate(); // new customer 
+	(new CargoShip(from, to))->Activate(); // new customer 
 
-	//Activate(Time+Exponential(1e4)); // 
+	Activate(Time+_diff); // 
 } 
 }; 
 
@@ -37,6 +55,7 @@ int main() { // experiment description
 	TrafficParser parser3("input/ship-VYSOKY-2020.tsv");
 	Traffic = parser3.Run();
 
+	long sedcondsInYear = 365*24*60*60;
 	//std::cout << "Pocet: " << Info.size() << std::endl;
 	/*std::cout << "Hledam cestu z: " << 34 << " do: " << 30 << std::endl;
 	auto test = findNext(&Map, 34, 30);
@@ -44,9 +63,15 @@ int main() { // experiment description
 
 	RandomSeed(time(0));
 
-	Init(0,365*24*60*60); // experiment initialization for time 0..1000 
+	Init(0,sedcondsInYear); // experiment initialization for time ONE YEAR
 
-	(new Generator)->Activate(); // customer generator 
+	for(auto &item : Traffic)
+	{
+		int diff = ((item.second * 1000) / 4000) / sedcondsInYear; //((Pocet tun k prevezeni) Pocet lodi)
+		(new Generator(diff, item.first.first, item.first.second))->Activate(); // customer generator 
+	}
+
+	
 	Run(); // simulation Box.Output(); // print of results 
 	std::cout << "KONEC" << std::endl;
 	
@@ -307,13 +332,13 @@ void CargoShip::Behavior()
 	_cur = _from;
 	while(true)
 	{
-		cout << "From: " << _cur << " To: " << _to << endl;
+		//cout << "From: " << _cur << " To: " << _to << endl;
 		next = findNext(&Map, _cur, _to);
 		_dir = next > _cur ? true : false;
 
 		_cur = next;
 
-		cout << "Next: " << next << endl;
+		//cout << "Next: " << next << endl;
 		/*if(_dir)
 			getSecondByFirst(&Map, _cur, &next);
 		else

@@ -51,9 +51,9 @@ enum STRUCTURE {
 class CargoShip : public Process {
 	private:
 		double _arrived = Time;
-		int _from = 0;
-		int _to = 18;
-		bool _dir = true;
+		int _from;
+		int _to;
+		bool _dir;
 		int _cur = 0; // TO-DO
 	public:
 		double Prichod; // atribute of each customer 
@@ -71,9 +71,10 @@ class CargoShip : public Process {
 		{ 
 			Activate(); 
 		}
-		CargoShip()
+		CargoShip(int from, int to)
+		 : _from(from), _to(to)
 		{
-			_dir = Random() > 0.5;
+			_dir = Random() < 0.5;
 		}
 
 };
@@ -91,6 +92,8 @@ protected:
 				_table->Output();
 				delete _table;
 			}
+			Q1->Output();
+			Q2->Output();
 			delete Q1;
 			delete Q2;
 		};
@@ -124,7 +127,7 @@ class Chamber : public Structure {
 
 	public:
 		Chamber(string name, float height, float waitTime) 
-			: _height(height), _waitTime(waitTime), _pos(Random() > 0.5) 
+			: _height(height), _waitTime(waitTime), _pos(Random() < 0.5) 
 		{
 
 			_table = new Histogram(converToAscii(string("Komora: " +name)),0,1000,20); 
@@ -162,7 +165,7 @@ class Tunnel : public Structure {
 
 	public:
 		Tunnel(string name, int len) 
-			: _len(len),  _pos(Random() > 0.5) 
+			: _len(len),  _pos(Random() < 0.5) 
 		{
 			//Vytvorime histogram pro tunel
 			_table = new Histogram(converToAscii(string("Tunel: " +name)),0,1000,20); 
@@ -197,7 +200,7 @@ class Bridge : public Structure {
 
 	public:
 		Bridge(string name, int len) 
-			: _len(len), _pos(Random() > 0.5) 
+			: _len(len), _pos(Random() < 0.5) 
 		{
 			_table = new Histogram(converToAscii(string("Most: " +name)),0,1000,20);
 
