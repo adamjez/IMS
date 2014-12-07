@@ -8,11 +8,10 @@
 
 
  // global objects: 
-Histogram ShipTable("Lode", 0, 10000, 100);
 vector<pair<int, int>> Map;
 vector<Structure *> Info;
 vector<pair<pair<int, int>, float>> Traffic;
-
+vector<pair<pair<int, int>, Histogram*>> ShipTables;
 
 class Generator : public Event { // model of system's input 
 	private:
@@ -25,25 +24,33 @@ class Generator : public Event { // model of system's input
 	{}
 
 	void Behavior() { // --- behavior specification ---
-	int from, to;
-	if(Random() < 0.5)
-	{
-		from = _place1; to = _place2;
-	}
-	else
-	{
-		from = _place2; to = _place1;
-	}
+		int from, to;
+		if(Random() < 0.5)
+		{
+			from = _place1; to = _place2;
+		}
+		else
+		{
+			from = _place2; to = _place1;
+		}
 
-	(new CargoShip(from, to))->Activate(); // new customer 
+		(new CargoShip(from, to))->Activate(); // new customer 
 
-	Activate(Time+_diff); // 
-} 
+		Activate(Time+_diff); // 
+	} 
 }; 
 
-int main() { // experiment description 
-	Print(" Vodni cesta - SIMLIB/C++ example\n"); 
-	SetOutput("model.out"); 
+int main(int argc, char** argv) { // experiment description 
+	if(argc < 2)
+	{
+		cerr << "Zadal jste prilis malo parametru" << endl;
+		cerr << "  Prvni argument musi byt nazev zdrojoveho souboru: napr. ship-VYSOKY-2050, ship-NIZKY-2020, ship-TREND-2020" << endl;
+		cerr << "  Vystup se zobrazi v souboru: [nazev_zdrojoveho_souboru].out" << endl;
+		return 1;
+	}
+
+	Print(" Vodni cesta - SIMLIB/C++ \n"); 
+	SetOutput((string(argv[1]) + string(".out")).c_str()); 
 
 	ConnectionParser parser1("input/connection.tsv");
 	Map = parser1.Run();
@@ -51,15 +58,17 @@ int main() { // experiment description
 	StructuresParser parser2("input/info.tsv");
 	Info = parser2.Run();
 
+	try{
+		TrafficParser parser3((string("input/") + string(argv[1]) + string(".tsv")).c_str());
+		Traffic = parser3.Run();
+	}
+	catch(exception)
+	{
+		cerr << "CHYBA: Nepodarilo se otevrit zdrojovy soubor." << endl;
+	}
 
-	TrafficParser parser3("input/ship-VYSOKY-2020.tsv");
-	Traffic = parser3.Run();
 
 	long sedcondsInYear = 365*24*60*60;
-	//std::cout << "Pocet: " << Info.size() << std::endl;
-	/*std::cout << "Hledam cestu z: " << 34 << " do: " << 30 << std::endl;
-	auto test = findNext(&Map, 34, 30);
-	std::cout << "Dalsi prvek je: " << test << std::endl;*/
 
 	RandomSeed(time(0));
 
@@ -67,10 +76,33 @@ int main() { // experiment description
 
 	for(auto &item : Traffic)
 	{
+		// Vytvorime dva histogramy, pro kazdy smer jeden
+		string name1 = string("Lode - Z: ") + to_string(item.first.first) + string(" Do: ") + to_string(item.first.second);
+		ShipTables.push_back(
+			make_pair(
+				make_pair(
+					item.first.first, item.first.second), 
+					new Histogram(converToAscii(name1), 0, 5000, 100)
+					)
+			);
+
+		string name2 = string("Lode - Z: ") + to_string(item.first.second) + string(" Do: ") + to_string(item.first.first);
+		ShipTables.push_back(
+			make_pair(
+				make_pair(
+					item.first.second, item.first.first), 
+					new Histogram(converToAscii(name2), 0, 5000, 100)
+					)
+			);
+
+
+	}
+
+	for(auto &item : Traffic)
+	{
 		int diff = sedcondsInYear / (item.second / 4) ; //((Pocet tun k prevezeni) Pocet lodi)
 		(new Generator(diff, item.first.first, item.first.second))->Activate(); // customer generator 
 	}
-
 	
 	Run(); // simulation Box.Output(); // print of results 
 	std::cout << "KONEC" << std::endl;
@@ -79,7 +111,11 @@ int main() { // experiment description
 	{
 		delete item;
 	}
-	ShipTable.Output();
+	for(auto &item : ShipTables)
+	{
+		item.second->Output();
+	}
+	//ShipTable.Output();
 
 	return 0; 
 }
@@ -404,11 +440,22 @@ const char * converToAscii(string letter)
 
 void CargoShip::Behavior()
 {
+	Histogram * table = NULL;
+
+
 	//cout << "VyJEL JSEM" << endl;
 	auto Prichod = Time;
 
 	Structure *struc;
 	int next;
+
+	for(auto &item : ShipTables)
+	{
+		if(item.first.first == _from && item.first.second == _to)
+		{
+			table = item.second;
+		}
+	}
 
 	_cur = _from;
 	while(true)
@@ -418,12 +465,7 @@ void CargoShip::Behavior()
 		_dir = next > _cur ? true : false;
 
 		_cur = next;
-		//cout << "Next: " << next << endl;
-		//
-		/*if(_dir)
-			getSecondByFirst(&Map, _cur, &next);
-		else
-			getFirstBySecond(&Map, _cur, &next);*/
+
 
 		if(_cur < 0)
 			break;
@@ -487,7 +529,8 @@ void CargoShip::Behavior()
 				if(_cur == _to)
 				{
 					//cout << "DOJEL JSEM" << endl;
-					ShipTable(Time-getArrivedTime()); 
+					if(table != NULL)
+						(*table)(Time-getArrivedTime()); 
 					return;
 				}
 				//cout << "Port2" << endl;
