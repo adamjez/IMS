@@ -22,6 +22,7 @@ Histogram Bridges("Mosty", 0, 200, 100);
 Histogram Tunnels("Tunely", 0, 200, 100);
 Histogram Rivers("Reka", 0, 200, 100);
 Histogram Cannals("Plavebni kanaly", 0, 200, 100);
+long TraveledDistance = 0;
 
 
 /**
@@ -94,7 +95,7 @@ int main(int argc, char** argv) { // experiment description
 	
 	Run(); // simulation Box.Output(); // print of results 
 	
-	std::cout << "USPESNE KONCIM" << std::endl;
+	std::cout << "USPESNE KONCIM S UJETOU VZDALENOSTI: " << TraveledDistance << std::endl;
 	
 	for(auto &item : Info)
 	{
@@ -512,6 +513,7 @@ void CargoShip::Behavior()
 
 		struc = Info.at(_cur);
 
+
 		switch(struc->getType())
 		{
 			case tunnel:
@@ -602,7 +604,7 @@ void CargoShip::Behavior()
 				break;
 		}
 
-
+		TraveledDistance += struc->getLength();
 	}
 	
 }

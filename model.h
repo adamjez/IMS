@@ -165,6 +165,7 @@ protected:
 			delete Q2;
 		};
 		virtual int getType() = 0;
+		virtual int getLength() = 0;
 		double Start()
 		{
 			return Time;
@@ -216,7 +217,10 @@ class Chamber : public Structure {
 			return chamber;
 		}
 
-
+		virtual int getLength()
+		{
+			return LENGTH_CHAMBER;
+		}
 
 		void PerformAction();
 		void Seize(CargoShip *ship);
@@ -259,6 +263,11 @@ class Tunnel : public Structure {
 			return tunnel;
 		}
 
+
+		virtual int getLength()
+		{
+			return (int)_len;
+		}
 		void ChangeDir();
 		void PerformAction(CargoShip *ship);
 		void Seize(CargoShip *ship);
@@ -301,6 +310,11 @@ class Bridge : public Structure {
 			return tunnel;
 		}
 
+		virtual int getLength()
+		{
+			return (int)_len;
+		}
+
 		void ChangeDir();
 		void PerformAction(CargoShip *ship);
 		void Seize(CargoShip *ship);
@@ -331,6 +345,11 @@ class Channel : public Structure {
 		{
 			return channel;
 		}
+
+		virtual int getLength()
+		{
+			return _length;
+		}
 };
 
 /**
@@ -353,6 +372,11 @@ class Port : public Structure {
 		virtual int getType()
 		{
 			return port;
+		}
+
+		virtual int getLength()
+		{
+			return 0;
 		}
 };
 
@@ -384,7 +408,12 @@ class River : public Structure {
 		}
 		virtual int getType()
 		{
-			return channel;
+			return river;
+		}
+
+		virtual int getLength()
+		{
+			return _length;
 		}
 };
 
