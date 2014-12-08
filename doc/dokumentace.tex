@@ -261,11 +261,142 @@ unicode,linkcolor=black]{hyperref}
 
   \section{Architektura simulačního modelu}
 
-    K umožnění experimentů s realným systémem bylo nejprve z nabytých znalostí
+    Následující kapitola pojednává o implementační části projektu. Pro pochopení
+    implementace je potřeba mít alespoň minimální znalosti jazyka C++ a 
+    objektově orientovaného programování.
+    K umožnění experimentů s realným systémem bylo nejprve nutno z nabytých znalostí
     vytvořit abstraktní model a poté simulační model (Princip Modelování a 
-    simulace -- IMS přednášky \ref{peringer} slide č. 9-10)
+    simulace -- IMS přednášky \ref{peringer} slide č. 9-10).
+
+    \subsection{Návrh objěktově orientovaného modelu}
+    
+      Všechny prvky (stavební prvky, řeka), které mají značný časový vliv na
+      dobu plavby lodě mají svou vlastní třídu.
+
+      \begin{itemize}
+        \item třída \texttt{WaterItem} \\
+              jedná se o abstraktní třídu, z níž jsou zděděny všechny prvky
+              vodní cesty. Třida se stará o odchytávání statistik pomocí metod
+              \texttt{Start} a \texttt{End}. Dále třida obsahuje dvě fronty 
+              -- každá fronta pro jeden směr plavby.
+
+              Rozhraní třídy výžaduje implementaci metod \texttt{getType} a 
+              \texttt{getLegth}. Sémantikou metody \texttt{getType} je vracení
+              typu prvku vodní cesty, \texttt{getType} analogicky vrací jejich 
+              délky.
+
+        \item třída \texttt{Chamber} \\
+              tato třída je abstrakcí plavební komory. 
+              Dědí výše popisovanou třídu \texttt{WaterItem}.
+
+              Metody implementované v ní jsou \texttt{seize}, \texttt{release}
+              a \texttt{performAction}. 
+
+              Metoda \texttt{seize} se stará o povolení vjezdu lodi do plavební
+              komory a zabránění dalším lodím využít komoru ve chvíli kdy je
+              obsazena. Pokud se hladina plavební komory neshoduje s hladinou
+              po které přijíždí loď, je loď zařazena do fronty a je nastaven
+              timeout, po jehož uplynutí se plavební komora naprázdno přečerpá,
+              pokud není do doby vypršení timeoutu plavební komora využita.
+              Metoda \texttt{performAction} vykoná úkon vplutí do komory,
+              napuštění komory a vyplutí z ní.
+
+              Hodnota timeout nebyla ve zdrojích nalezena, a bylo nutno ji
+              odhadnout na základě experimentů. Hodnota je dvojnásobkem doby
+              pro proplutí plavební komorou.
+
+              U dalších tříd je účel této metody stejný.
+
+              Metoda \texttt{release} zařídí případné aktivování dalšího
+              plavidla ve frontě.
+        \item třídy \texttt{Tunel} a \texttt{Bridge} \\
+              také obsahuje metody \texttt{seize}, \texttt{performAction} a
+              \texttt{release}. Rozdíl u metody \texttt{seize} je, že lodě se
+              střídají v proplouvání tunelem. Na základě délky tunelu
+              (či mostu) se lodě seskupují.
+        \item třídy \texttt{Channel}, \texttt{Port} a \texttt{River} \\
+              třídy implementují pouze metodu \texttt{performAction}, v níž se
+              počítá doba proplutí daným místem. Speciálně u třídy
+              \texttt{River}, která je abstrakcí tekoucí řeky jsme brali v
+              úvahu i směr toku.
+        \item třída \texttt{CargoShip} \\
+              Dědí od třídy \texttt{Process} z knihovny SIMLIB. Implementuje
+              metodu \texttt{behaviour}, ve které podle typu právě
+              proplouvaného prvku vyvolá odpovídající akci. Objekt této třídy
+              má daný počáteční i
+              koncový uzel symbolizující přístav.
+      \end{itemize}
+
+    \subsection{Načítání trasy a transportovaného objemu}
+
+      Třídy načítají údaje o trase ze zdrojových souborů ve složce
+      \textit{input.}
+
+      V souboru \textit{info.tsv} jsou uloženy informace o všech 
+      prvcích vodní trasy. Typ každého prvku je určen identifikátorem, podle
+      něhož se dále rozhoduje o zpusobu zacházení se souvisejícími údají.
+
+      V souboru \textit{connections.tsv} jsou dvojice identifikátorů jejichž
+      prvy se nachází v trase bezprostředně za sebou.
+
+      Dále jsou zde konfigurační soubory, které určují trasu a převezený objem
+      za rok. Jednotkou je 1000 tun.
 
   \section{Podstata simulačních experimentů a jejich průběh}
+
+    Za cíl jsme si stanovili zjistit propustnost simulovaného vodního koridoru.
+    Porovnávali jsme 3 různé scénáře, a jejich vliv na časovou náročnost dané
+    trasy.
+
+    \break
+
+    \noindent 
+    Scénář TREND -- Prognóza objemu přepravy (Analýza hospodářského
+    potenciálu \ref{analyza} -- strana č. 226)
+    \begin{center}
+      \begin{tabular}{| l | l | l |}
+        \hline
+        & rok 2020 & rok 2050 \\ \hline
+        Hodonín - Otrokovice & 7470 tis. t & 10280 tis. t \\ \hline
+        Otrokovice - Přerov & 7600 tis. t & 14600 tis. t \\ \hline
+        Přerov - Mošnov &  8100 tis. t & 11150 tis. t \\ \hline
+        Mošnov - Ostrava & 6520 tis. t & 8970 tis. t \\ \hline
+        Přerov - Olomouc & 4850 tis. t & 6680 tis. t \\ \hline
+        Olomouc - Pardubice & 4740 tis. t & 6530 tis. t \\ \hline
+        \end{tabular}
+    \end{center}
+
+    \noindent 
+    Scénář VYSOKÝ -- Prognóza objemu přepravy (Analýza hospodářského
+    potenciálu \ref{analyza} -- strana č. 230)
+    \begin{center}
+      \begin{tabular}{| l | l | l |}
+        \hline
+        & rok 2020 & rok 2050 \\ \hline
+        Hodonín - Otrokovice & 9730 tis. t & 14660 tis. t \\ \hline
+        Otrokovice - Přerov & 9710 tis. t & 14620 tis. t \\ \hline
+        Přerov - Mošnov & 10020 tis. t & 15090 tis. t \\ \hline
+        Mošnov - Ostrava & 9890 tis. t & 14900 tis. t \\ \hline
+        Přerov - Olomouc & 5820 tis. t & 8770 tis. t \\ \hline
+        Olomouc - Pardubice & 5610 tis. t & 8450 tis. t \\ \hline
+        \end{tabular}
+    \end{center}
+
+    \noindent 
+    Scénář NÍZKÝ -- Prognóza objemu přepravy (Analýza hospodářského
+    potenciálu \ref{analyza} -- strana č. 230)
+    \begin{center}
+      \begin{tabular}{| l | l | l |}
+        \hline
+        & rok 2020 & rok 2050 \\ \hline
+        Hodonín - Otrokovice & 5170 tis. t & 6340 tis. t \\ \hline
+        Otrokovice - Přerov & 5260 tis. t & 6450 tis. t \\ \hline
+        Přerov - Mošnov & 5610 tis. t & 6880 tis. t \\ \hline
+        Mošnov - Ostrava & 4500 tis. t & 5530 tis. t \\ \hline
+        Přerov - Olomouc & 3340 tis. t & 4090 tis. t \\ \hline
+        Olomouc - Pardubice & 3260 tis. t & 4000 tis. t \\ \hline
+        \end{tabular}
+    \end{center}
 
   \section{Závěr}
 
@@ -281,6 +412,9 @@ unicode,linkcolor=black]{hyperref}
             Ministerstvo průmyslu a obchodu \\
         \href{http://d-o-l.cz/index.php/cs/kestazeni/category/6}
              {http://d-o-l.cz/index.php/cs/kestazeni/category/6} \label{studie}
+      \item Analýza hospodářského potenciálu dopravního koridoru \\
+        \href{http://d-o-l.cz/index.php/cs/kestazeni/category/27}
+             {http://d-o-l.cz/index.php/cs/kestazeni/category/27} \label{analyza}
       \item Plánovaná trasa koridoru zaznačená v Google Maps \\
         \href{http://povode.aspone.cz/Maps/dol.html}
              {povodne.aspone.cz/Maps/dol.html} \label{google-mapa}
@@ -289,7 +423,7 @@ unicode,linkcolor=black]{hyperref}
     \end{enumerate}
 
   \appendix
-    \newpage
+  \newpage
 
   \section{Přílohy}
 
