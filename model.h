@@ -36,15 +36,17 @@ class Timeout : public Event {
 
 		void Behavior(){
 			if(_proc != NULL)
-			{
+			{	
 				_proc->Activate();
-				Cancel();
+				Passivate();
+				_proc = NULL;
 			}
 			else if(_queue != NULL)
 			{
 				ActivateQueue(_queue, _max);
-				Cancel();
+				Passivate();
 			}
+
 		}
 
 		void SetQueue(Queue * que, int max)
@@ -56,6 +58,8 @@ class Timeout : public Event {
 		{
 			_proc = proc;
 		}
+
+
 	private:
 		Entity *_proc = NULL;
 		Queue *_queue = NULL;
@@ -138,29 +142,32 @@ class Generator : public Event {
 
 		(new CargoShip(from, to))->Activate(); // new customer 
 
-		Activate(Time+_diff); // 
+		Activate(Time+(_diff)); // 
 	} 
 }; 
 
 
 /**
- * @class 	Structure
+ * @class 	WaterItem
  * @brief	Trida, ktera slouzi k dedeni ostatnim objektum
  *			jako je reka, pristav atd. vsechno co se nalezne
  *			na vodni ceste a nejak ovlivnuje cas lodi na ceste
  */
-class Structure {
+class WaterItem {
 protected:
 	Histogram *_table = NULL;
+	//int _type = 0;
 	public:
-		virtual ~Structure() {
+		virtual ~WaterItem() {
 			if(_table != NULL)
 			{
 				_table->Output();
 				delete _table;
 			}
+
 			Q1->Output();
 			Q2->Output();
+		
 			delete Q1;
 			delete Q2;
 		};
@@ -188,19 +195,20 @@ protected:
  *			jeji nazev, delka a take promenna cekaci doba pred prepustenim nadrze.
  *			Pote uz jej lze vyuzivat jako Facility ze simlibu.
  */
-class Chamber : public Structure {
+class Chamber : public WaterItem {
 	private:
 		float _height;
 		int _waitTime;
-		int _fillTime;
+		int _fillTime = 0;
+		int _performTime = 0;
 		bool _pos;
 		Timeout _tm;
 
 		CargoShip *in = NULL;
 
 	public:
-		Chamber(string name, float height, float waitTime) 
-			: _height(height), _waitTime(waitTime), _pos(Random() < 0.5) 
+		Chamber(string name, float height) 
+			: _height(height),  _pos(Random() < 0.5) 
 		{
 
 			_table = new Histogram(converToAscii(string("Komora: " +name)),0,200,20); 
@@ -210,6 +218,8 @@ class Chamber : public Structure {
 			else
 				_fillTime = _height * TIME_METER_MEDIUM_CHAMBER;
 
+			_performTime = TIME_CLOSE_GATE  + TIME_OPEN_GATE + TIME_GO_OUT + TIME_GO_IN + _fillTime;
+			_waitTime = _performTime * 2;
 		}
 
 		virtual int getType()
@@ -222,7 +232,7 @@ class Chamber : public Structure {
 			return 0; // Zanedbavame delku komor - vychazi pote presnejsi vzdalenosti
 		}
 
-		void PerformAction();
+		void PerformAction(CargoShip *ship);
 		void Seize(CargoShip *ship);
 		void Release();
 };
@@ -234,7 +244,7 @@ class Chamber : public Structure {
  * @brief	Trida, ktera modeluje tunel. V konstruktoru se nastavi
  *			jeho nazev, delka a pote uz jej lze vyuzivat jako Facility ze simlibu.
  */
-class Tunnel : public Structure {
+class Tunnel : public WaterItem {
 	private:
 		int _in = 0;
 		float _len;
@@ -253,7 +263,7 @@ class Tunnel : public Structure {
 			// Doba za kterou lod prepluje tunel
 			_crossTime = _len / SPEED_IN_TUNNEL;
 			// Pro kolik lodi se ceka
-			_waitFor = _len < DIFF_TUNNEL_METER ? 1 : 3; 
+			_waitFor = _len < DIFF_TUNNEL_METER ? 1 : 1; 
 
 			_waitTime = 2*_crossTime * _waitFor;
 		}
@@ -280,7 +290,7 @@ class Tunnel : public Structure {
  * @brief	Trida, ktera modeluje most. V konstruktoru se nastavi
  *			jeho nazev, delka a pote uz jej lze vyuzivat jako Facility ze simlibu.
  */
-class Bridge : public Structure {
+class Bridge : public WaterItem {
 	private:
 		int _in = 0;
 		float _len;
@@ -328,7 +338,7 @@ class Bridge : public Structure {
  *			jeho delka. Jedina uzitecna funkce je Perform action,
  *			ktera simuluju propluti kanalem a dane delce.
  */
-class Channel : public Structure {
+class Channel : public WaterItem {
 	private:
 		int _length;
 		int _crossTime;
@@ -357,7 +367,7 @@ class Channel : public Structure {
  * @brief	Trida, ktera modeluje pristav. Prozatim nema zadnou
  *			uzitecnou metodu. Slouzi pouze k ulozeni pristavu jako typu
  */
-class Port : public Structure {
+class Port : public WaterItem {
 	private:
 		float _prob;
 	public:
@@ -366,7 +376,7 @@ class Port : public Structure {
 
 		void PerformAction(CargoShip *ship)
 		{
-			;
+			; // Asi neni potreba nic implementovat
 		}
 
 		virtual int getType()
@@ -385,7 +395,7 @@ class Port : public Structure {
  * @brief	Trida, ktera modeluje reku. Podle smeru, kterym lod
  *			rekou proplouva je udana delka jejiho prepluti
  */
-class River : public Structure {
+class River : public WaterItem {
 	private:
 		bool _dir;
 		int _length;

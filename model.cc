@@ -14,7 +14,7 @@
 
  // global objects: 
 vector<pair<int, int>> Map;
-vector<Structure *> Info;
+vector<WaterItem *> Info;
 vector<pair<pair<int, int>, float>> Traffic;
 vector<pair<pair<int, int>, Histogram*>> ShipTables;
 Histogram Chambers("Plavebni komory", 0, 200, 100);
@@ -44,7 +44,7 @@ int main(int argc, char** argv) { // experiment description
 	ConnectionParser parser1("input/connection.tsv");
 	Map = parser1.Run();
 
-	StructuresParser parser2("input/info.tsv");
+	WaterItemsParser parser2("input/info.tsv");
 	Info = parser2.Run();
 
 	try{
@@ -71,7 +71,7 @@ int main(int argc, char** argv) { // experiment description
 			make_pair(
 				make_pair(
 					item.first.first, item.first.second), 
-					new Histogram(converToAscii(name1), 0, 5000, 100)
+					new Histogram(converToAscii(name1), 0, 1000, 20)
 					)
 			);
 
@@ -80,7 +80,7 @@ int main(int argc, char** argv) { // experiment description
 			make_pair(
 				make_pair(
 					item.first.second, item.first.first), 
-					new Histogram(converToAscii(name2), 0, 5000, 100)
+					new Histogram(converToAscii(name2), 0, 1000, 20)
 					)
 			);
 
@@ -91,7 +91,7 @@ int main(int argc, char** argv) { // experiment description
 	{
 		if(item.second == 0)
 			continue;
-		int diff = sedcondsInYear / (item.second / 4) ; //((Pocet tun k prevezeni) Pocet lodi)
+		int diff = sedcondsInYear / (item.second / SHIP_MAX_THOUSAND_TUNS) ; //((Pocet tun k prevezeni) Pocet lodi)
 		(new Generator(diff, item.first.first, item.first.second))->Activate(); // customer generator 
 	}
 	
@@ -108,9 +108,9 @@ int main(int argc, char** argv) { // experiment description
 		item.second->Output();
 	}
 	
-/*
+
 	Chambers.Output();
-	Bridges.Output();
+	/*Bridges.Output();
 	Tunnels.Output();
 	Rivers.Output();
 	Cannals.Output();
@@ -126,7 +126,7 @@ int main(int argc, char** argv) { // experiment description
 void Chamber::Seize(CargoShip *ship)
 {
 	ship->Prichod = Time;
-	//std::cout << "Seize" << std::endl;
+repeat:
 	if(in != NULL)
 	{
 		// Jestli je lod nahore -> vlozit do horni fronty a opak
@@ -138,7 +138,7 @@ void Chamber::Seize(CargoShip *ship)
 		ship->Passivate();
 
 	}
-	else if (ship->getDirection() != this->_pos)
+	else if (ship->getDirection() != _pos)
 	{
 		if(ship->getDirection())
 			Q1->Insert(ship);
@@ -147,50 +147,57 @@ void Chamber::Seize(CargoShip *ship)
 
 		if(_tm.Idle())
 		{
+			if(in != NULL)
+				cout << "ERROR" << endl;
 			_tm.SetProc(ship);
 			_tm.Activate(Time + _waitTime);
 		}
 
-		ship->Passivate();
 
+		ship->Passivate();
 	}
 
+	if(in != NULL)
+	{
+		if(ship->isInQueue())
+			ship->Out();
+		//cout << "TEST Q1: " << Q1->Length() << " Q2: " << Q2->Length() << endl;
+		goto repeat;
+	}
+	_tm.Cancel();
 
-	// Delete self from Queue
-	/*if(ship->getDirection() && Q1->front() == ship)
-		Q1->GetFirst();
-	else if(Q2->front() == ship)
-		Q2->GetFirst();
-	*/
+
 
 	if(ship->isInQueue())
 		ship->Out();
 
 
-	in = ship;
-	_tm.Cancel();
 
+	
+	in = ship;
 }
 
 /**
  * Funkce slouzi k simulaci propluti komorou
  */
-void Chamber::PerformAction()
+void Chamber::PerformAction(CargoShip *ship)
 {
-	
-	if(in->getDirection() != this->_pos)
+
+	if(in->getDirection() != _pos)
 	{
 		//std::cout << "Preplnuju naprazdno :(" << std::endl;
 		// Potrebuju vyrovnat hladinu s lodi
 		in->Wait(TIME_CLOSE_GATE  + TIME_OPEN_GATE + _fillTime);
-		this->_pos = !this->_pos;
+		_pos = !_pos;
 	}
-	else
-		;//std::cout << "Nemusim preplnovat:)" << std::endl;
+	_tm.Cancel();
+	if(in != ship)
+		cerr << "Neco satneho se stalo" << endl;
 
-	in->Wait(TIME_CLOSE_GATE  + TIME_OPEN_GATE + TIME_GO_OUT + TIME_GO_IN + _fillTime);
-	
-	this->_pos = !this->_pos;
+	in->Wait(_performTime);
+
+	if(in != ship)
+		cerr << "Neco satneho se stalo" << endl;
 }
 
 /**
@@ -198,7 +205,14 @@ void Chamber::PerformAction()
  */
 void Chamber::Release()
 {
+	_tm.Cancel();
+	//if(in->isInQueue())
+	//	cout << "Jsem jeste v Queue. WTF" << endl;
+	_pos = !_pos;
+	//std::cout << "Release: " << std::endl;
 	in = NULL;
+
+
 
 	if(_pos)
 	{
@@ -212,6 +226,7 @@ void Chamber::Release()
 			_tm.SetProc(Q2->front());
 			_tm.Activate(Time + _waitTime);
 			//std::cout << "ACTIVATE2" << std::endl;
+
 		}
 	}
 	else
@@ -226,6 +241,7 @@ void Chamber::Release()
 			_tm.SetProc(Q1->front());
 			_tm.Activate(Time + _waitTime);
 			//std::cout << "ACTIVATE2" << std::endl;
+
 		}
 	}
 
@@ -278,6 +294,8 @@ void Tunnel::Seize(CargoShip *ship)
 			}
 		}
 	}
+
+
 
 	ship->Passivate();
 	//cout << "Prestal jsem cekat v case: " << (Time - test) << endl;
@@ -481,10 +499,10 @@ void CargoShip::Behavior()
 	Histogram * table = NULL;
 
 
-	cout << "VYJEL JSEM" << endl;
+	//cout << "VYJEL JSEM" << endl;
 	auto Prichod = Time;
 
-	Structure *struc;
+	WaterItem *struc;
 	int next;
 
 	for(auto &item : ShipTables)
@@ -511,7 +529,10 @@ void CargoShip::Behavior()
 		//cout << "Next: " << next << endl;
 
 		if(_cur >= (int)Info.size())
+		{
+			cerr << "Error: spatne nakonfigurovane soubory" << endl;
 			return;
+		}
 
 		struc = Info.at(_cur);
 
@@ -560,7 +581,7 @@ void CargoShip::Behavior()
 				Prichod = cham->Start();
 
 				cham->Seize(this); // start of service 
-				cham->PerformAction();
+				cham->PerformAction(this);
 				cham->Release(); // end of service 
 
 				cham->End(Prichod);
@@ -571,11 +592,12 @@ void CargoShip::Behavior()
 			case port:
 			{
 				//Port * port = (Port *)struc;
-
+				//cout << "Cur: " << _cur << " To: "<< _to << endl;
 				if(_cur == _to)
 				{
 					if(table != NULL)
 						(*table)(Time-getArrivedTime()); 
+
 					return;
 				}
 				break;
@@ -605,6 +627,9 @@ void CargoShip::Behavior()
 			default:
 				break;
 		}
+		// Hack, pri zadani ID, ktere neni pristavu se to spravne ukonci
+		if(_cur == _to)
+			return;
 
 		TraveledDistance += struc->getLength();
 	}

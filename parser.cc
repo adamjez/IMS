@@ -159,13 +159,13 @@ vector<pair<int, int>> ConnectionParser::Run()
  * jsou cisla spojene s pridavanym objektem, STR je nazev objektu a A je cislo typu objektu
  * @return	vrati seznam objektu (most, reka, pristav, apod.)
  */
-vector<Structure *> StructuresParser::Run()
+vector<WaterItem *> WaterItemsParser::Run()
 {
 	int type;
 	string name;
 	float x, y, z;
-	Structure *structure;
-	vector<Structure *> result;
+	WaterItem *item;
+	vector<WaterItem *> result;
 
 	_readFile = new ifstream(_fileName);
 
@@ -178,37 +178,37 @@ vector<Structure *> StructuresParser::Run()
 			case tunnel:
 			{
 				Tunnel * tun = new Tunnel(name, x);
-				structure = (Structure*)tun;
+				item = (WaterItem*)tun;
 				break;
 			}
 			case chamber:
 			{
-				Chamber * cham = new Chamber(name, x, 5*30);
-				structure = (Structure*)cham;
+				Chamber * cham = new Chamber(name, x);
+				item = (WaterItem*)cham;
 				break;
 			}
 			case port:
 			{
 				Port * port = new Port(x);
-				structure = (Structure*)port;
+				item = (WaterItem*)port;
 				break;
 			}
 			case channel:
 			{
 				Channel * chan = new Channel(x);
-				structure = (Structure*)chan;
+				item = (WaterItem*)chan;
 				break;
 			}
 			case river:
 			{
 				River * riv = new River(x, (bool)y);
-				structure = (Structure*)riv;
+				item = (WaterItem*)riv;
 				break;
 			}
 			case bridge:
 			{
 				Bridge * brid = new Bridge(name, x);
-				structure = (Structure*)brid;
+				item = (WaterItem*)brid;
 				break;
 			}
 			default:
@@ -216,7 +216,7 @@ vector<Structure *> StructuresParser::Run()
 
 
 		}
-		result.push_back(structure);
+		result.push_back(item);
 	}
 
 	_readFile->close();

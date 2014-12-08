@@ -37,23 +37,23 @@ public:
 };
 
 /**
- * @class 	StructuresParser
+ * @class 	WaterItemsParser
  * @brief	Trida parsujici zdrojovy soubor s objekty
  *			objekt - most, tunel, reka apod.
  */
-class StructuresParser
+class WaterItemsParser
 {
 
 private:
 	string _fileName;
 	ifstream * _readFile;
 public:
-	StructuresParser(string filename)
+	WaterItemsParser(string filename)
 		: _fileName(filename)
 	{
 
 	}
-	vector<Structure *> Run();
+	vector<WaterItem *> Run();
 };
 
 /**
