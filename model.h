@@ -129,9 +129,9 @@ class Generator : public Event {
 	 : _diff(diff), _place1(place1), _place2(place2)
 	{}
 
-	void Behavior() { // --- behavior specification ---
+	void Behavior() { 
 		int from, to;
-		if(Random() < 0.5)
+		if(Random() < 0.5) // Pomer lodi na kazdou stranou pul na pul
 		{
 			from = _place1; to = _place2;
 		}

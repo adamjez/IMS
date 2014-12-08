@@ -91,7 +91,7 @@ int main(int argc, char** argv) { // experiment description
 	{
 		if(item.second == 0)
 			continue;
-		int diff = sedcondsInYear / (item.second / SHIP_MAX_THOUSAND_TUNS) ; //((Pocet tun k prevezeni) Pocet lodi)
+		int diff = (float)sedcondsInYear / ((float)item.second / SHIP_MAX_THOUSAND_TUNS) ; //((Pocet tun k prevezeni) Pocet lodi)
 		(new Generator(diff, item.first.first, item.first.second))->Activate(); // customer generator 
 	}
 	
@@ -109,8 +109,8 @@ int main(int argc, char** argv) { // experiment description
 	}
 	
 
-	Chambers.Output();
-	/*Bridges.Output();
+	/*Chambers.Output();
+	Bridges.Output();
 	Tunnels.Output();
 	Rivers.Output();
 	Cannals.Output();

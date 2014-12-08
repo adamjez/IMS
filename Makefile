@@ -12,7 +12,7 @@ model:
 	$(CC) $(CPPFLAGS) -o model model.cc parser.cc  -lsimlib -lm 
 
 run:
-	./model ship-VYSOKY-2050 & ./model ship-VYSOKY-2020 & ./model ship-NIZKY-2020 & ./model ship-NIZKY-2050 & ./model ship-TREND-2020 & ./model ship-TREND-2050
+	./model ship-VYSOKY-2050 && ./model ship-VYSOKY-2020 && ./model ship-NIZKY-2020 && ./model ship-NIZKY-2050 && ./model ship-TREND-2020 && ./model ship-TREND-2050
 
 clean:
 	rm -f model ./*.out
