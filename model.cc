@@ -89,6 +89,8 @@ int main(int argc, char** argv) { // experiment description
 
 	for(auto &item : Traffic)
 	{
+		if(item.second == 0)
+			continue;
 		int diff = sedcondsInYear / (item.second / 4) ; //((Pocet tun k prevezeni) Pocet lodi)
 		(new Generator(diff, item.first.first, item.first.second))->Activate(); // customer generator 
 	}
@@ -479,7 +481,7 @@ void CargoShip::Behavior()
 	Histogram * table = NULL;
 
 
-	//cout << "VyJEL JSEM" << endl;
+	cout << "VYJEL JSEM" << endl;
 	auto Prichod = Time;
 
 	Structure *struc;
