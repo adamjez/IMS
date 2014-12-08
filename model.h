@@ -219,7 +219,7 @@ class Chamber : public Structure {
 
 		virtual int getLength()
 		{
-			return LENGTH_CHAMBER;
+			return 0; // Zanedbavame delku komor - vychazi pote presnejsi vzdalenosti
 		}
 
 		void PerformAction();
