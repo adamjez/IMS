@@ -64,9 +64,9 @@ unicode,linkcolor=black]{hyperref}
       virtuálním prostředí (Validace modelu -- IMS přednášky \ref{peringer}
       slide č. 37). Ověřovalo se, zda modelová situace odpovídá reálné situaci,
       přičemž informace byly čerpány pouze z věrohodných zdrojů.
-      Jelikož reálný systém, určený simulovaným modelem v současné době
-      neexistuje, jako validní jsme model prohlásili na základě získaných
-      informací
+      Jelikož reálný systém, určený simulovaným modelem, v současné době
+      neexistuje, jako validní jsme model prohlásili na základě
+      informací získaných z těchto zdrojů.
 
   \section{Rozbor tématu}
 
@@ -87,7 +87,7 @@ unicode,linkcolor=black]{hyperref}
       \item doba otevření vrat plavební komory je 30 sekund
       \item doba vplutí do plavební komory je 516 sekund
       \item doba vyplutí z plavební komory je 355 sekund
-      \item nízké plavební komora je taková, u níž výškový rozdíl mezi
+      \item nízká plavební komora je taková, u níž výškový rozdíl mezi
             hladinami toku před a za komorou není větší než 12.5 m.
             Pokud plavební komora vyrovnává výšku hladiny přesahující 12.5 m,
             nazýváme ji vysokou plavební komorou
@@ -98,7 +98,7 @@ unicode,linkcolor=black]{hyperref}
     \end{itemize}
 
     \noindent
-    Hodnoty,týkající se plavby v tunelu:
+    Hodnoty týkající se plavby v tunelu:
 
     \begin{itemize}
       \item bezpečná rychlost lodi při plavbě v tunelu je 2,22 m/s
@@ -114,6 +114,8 @@ unicode,linkcolor=black]{hyperref}
       \item rychlost při plavbě v tunelu je 2,77 m/s
       \item hranice, kdy se začne aplikovat seskupování je 2090 m
     \end{itemize}
+
+    \break
 
     \noindent
     Obecné hodnoty při plavbě:
@@ -133,7 +135,7 @@ unicode,linkcolor=black]{hyperref}
             nemohou pohybovat proti sobě. Lodě, které se chystají projet
             tunelem stejným směrem se mohou seskupit za účelem zrychlení plavby
             (Kniha \ref{kniha} -- strana č. 157)
-      \item je plánovana vodni trida Vb, kde mohou plout motorové nákladní lodě
+      \item je plánovaná vodní třída Vb, kde mohou plout motorové nákladní lodě
             o nosnosti 2500 tun, nebo menší řičně-námořní lodě a tlačné
             soupravy s nosností 4000 tun
             (Kniha \ref{kniha} -- strana č. 136)
@@ -141,11 +143,10 @@ unicode,linkcolor=black]{hyperref}
             (Studie projektu \ref{studie} -- strana č. 38)
     \end{itemize}
         
-    Jako prioritní zdroj informacím o plánované trase koridoru 
-    nám velmi dobře posloužily volně
-    dostupné materiály na internetové stránce projektu zabývajicího se
-    problematikou koridoru Dunaj-Odra-Labe a také poskytnuta literatura
-    \ref{kniha} od těchtýž autorů.
+    Velmi dobrým zdrojem informací o plánované trase koridoru byly materiály
+    volně dostupné na internetové stránce projektu, který se problematikou
+    vodního koridoru Dunaj-Odra-Labe dlouhodobě intenzivně zabývá, a také
+    literatura \ref{kniha}, kterou nám poskytli její autoři.
 
     \subsection{Popis použitých postupů}
 
@@ -191,12 +192,14 @@ unicode,linkcolor=black]{hyperref}
 
 
       Petriho síť na obrázku č. \ref{petri_1} zobrazuje mechanismus proplutí
-      tunelu (stejný mechanismus lze aplikovat při proplutí mostu).
-      Proměnná \texttt{M} udává počet lodí, které vplouvají do tunelu zároveň.
+      tunelem (stejný mechanismus lze aplikovat při proplouváníí mostu).
+      Proměnná \texttt{M} udává počet lodí, které mohou vplout do tunelu zároveň.
       Ve téměř všech tunelech je tato proměnná rovna $1$. Výjimkou je tunel
       \textit{Vrcholový}, a to kvůli své délce \,--\, 7600 metrů. U tohoto
-      tunelu je proměnná \texttt{M} nastavena na hodnotu $3$, aby vzhledem k
-      blízkým komorám tento tunel neměl tak značnou míru na zdržení lodí.
+      tunelu je proměnná \texttt{M} nastavena na hodnotu $3$
+      
+      a to zejména kvůli blízkým plavebním komorám. Nastavení vyšší proměnné
+      tak sníží časovou ztrátu lodí při následném překonávání plavebních komor.
       Hodnota je určena na základě tabulky ve
       studii (Studie projektu \ref{studie} -- stana č. 48).
 
@@ -215,7 +218,7 @@ unicode,linkcolor=black]{hyperref}
       Tento čas je určený délkou tunelu a bezpečnou
       rychlostí v těchto jednolodních tunelech, která činí
       8 km/h (Studie projektu \ref{studie} -- strana č. 47, poznámka pod čarou).
-      Kvůli jednoduchosti byl zanedbán mechanismus, který je pro správné
+      Pro jednoduchost byl v petriho síti zanedbán mechanismus, který je pro správné
       fungování simulace nutný \,--\, timeout. Po určité době bez proplutí lodě
       se směr tunelu automaticky změní. Doba byla navržena jako dvojnásobek
       proplouvací doby.
@@ -249,8 +252,8 @@ unicode,linkcolor=black]{hyperref}
       Ve vysokých komorách se může voda plnit rychleji.
       Proměnná \texttt{T} udává čekací dobu, po kterou, pokud není plavební
       komora nijak využita, je komora přečerpána kvůli čekajícímu plavidlu na
-      opačné hladině, než je aktuální hladina komory. Hodnotu jsme určili
-      experimentováním.
+      opačné hladině, než je aktuální hladina komory. Hodnotu proměnné 
+      \texttt{T} jsme určili experimentováním.
 
       \begin{figure}[H]
         \centering
@@ -268,10 +271,10 @@ unicode,linkcolor=black]{hyperref}
     vytvořit abstraktní model a poté simulační model (Princip Modelování a 
     simulace -- IMS přednášky \ref{peringer} slide č. 9-10).
 
-    \subsection{Návrh objěktově orientovaného modelu}
+    \subsection{Návrh objektově orientovaného modelu}
     
       Všechny prvky (stavební prvky, řeka), které mají značný časový vliv na
-      dobu plavby lodě mají svou vlastní třídu.
+      dobu plavby lodě, mají svou vlastní třídu.
 
       \begin{itemize}
         \item třída \texttt{WaterItem} \\
@@ -317,7 +320,7 @@ unicode,linkcolor=black]{hyperref}
         \item třídy \texttt{Channel}, \texttt{Port} a \texttt{River} \\
               třídy implementují pouze metodu \texttt{performAction}, v níž se
               počítá doba proplutí daným místem. Speciálně u třídy
-              \texttt{River}, která je abstrakcí tekoucí řeky jsme brali v
+              \texttt{River}, která je abstrakcí tekoucí řeky, jsme brali v
               úvahu i směr toku.
         \item třída \texttt{CargoShip} \\
               Dědí od třídy \texttt{Process} z knihovny SIMLIB. Implementuje
@@ -337,7 +340,7 @@ unicode,linkcolor=black]{hyperref}
       něhož se dále rozhoduje o zpusobu zacházení se souvisejícími údají.
 
       V souboru \textit{connections.tsv} jsou dvojice identifikátorů jejichž
-      prvy se nachází v trase bezprostředně za sebou.
+      prvky se nachází v trase bezprostředně za sebou.
 
       Dále jsou zde konfigurační soubory, které určují trasu a převezený objem
       za rok. Jednotkou je 1000 tun.
@@ -345,8 +348,8 @@ unicode,linkcolor=black]{hyperref}
   \section{Podstata simulačních experimentů a jejich průběh}
 
     Za cíl jsme si stanovili zjistit propustnost simulovaného vodního koridoru.
-    Porovnávali jsme 3 různé scénáře, a jejich vliv na časovou náročnost dané
-    trasy.
+    Simulovali jsme 3 různé scénáře a porovnáním zjišťovali jejich vliv na časovou
+    náročnost dané trasy
 
     \break
 
@@ -417,7 +420,7 @@ unicode,linkcolor=black]{hyperref}
              {http://d-o-l.cz/index.php/cs/kestazeni/category/27} \label{analyza}
       \item Plánovaná trasa koridoru zaznačená v Google Maps \\
         \href{http://povode.aspone.cz/Maps/dol.html}
-             {povodne.aspone.cz/Maps/dol.html} \label{google-mapa}
+             {http://povodne.aspone.cz/Maps/dol.html} \label{google-mapa}
       \item Podzimek, J., : Křižovatka tří moří, Vodní koridor Dunaj-Odra-Labe,
             vydání 2., In:Hejkal, 2012, ISBN: 978-80-254-0105-7 \label{kniha}
     \end{enumerate}
