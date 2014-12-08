@@ -1,7 +1,12 @@
-///////////////////////
-//	IMS projekt
-//	Autor: xjezad00
-///////////////////////
+/**
+ * @file 	model.h
+ * @author	Adam Jez (xjezad00@stud.fit.vutbr.cz)
+ * @author	Roman Blanco (xblanc01@stud.fit.vutbr.cz)
+ * @date 	7.12.2014
+ * @brief	Hlavicky soubor pro tridy, ktere modeluji struktury
+ *			na vodni ceste, ktere nejvice ovlivnuji dobu prepluti
+ */
+
 
 #ifndef MODEL_H
 #define MODEL_H
@@ -14,11 +19,17 @@
 
 using namespace  std;
 
-void ActivateQueue(Queue *q, int max = INT_MAX);
+
+//{}
+void ActivateQueue(Queue *q, u_int max = INT_MAX);
 const char *converToAscii(string letter);
 
 
-
+/**
+ * @class 	Timeout
+ * @brief	Trida slouzeni k vyvolani nejake akce
+ *			bud spusteni procesu nebo aktivovani fronty
+ */
 class Timeout : public Event {
 	public:
 		Timeout() : Event() {}
@@ -60,7 +71,12 @@ enum STRUCTURE {
 	bridge,
 };
 
-// Cargo ship as process
+/**
+ * @class 	CargoShip
+ * @brief	Trida, ktera dedi od procesu ze Simlibu
+ *			predstavuje nakladni lod, ktera ma urcenou pocatecni
+ *			a cilovou destinaci
+ */
 class CargoShip : public Process {
 	private:
 		double _arrived = Time;
@@ -93,13 +109,51 @@ class CargoShip : public Process {
 };
 
 
+/**
+ * @class 	Generator
+ * @brief	Trida slouzeni k vytvareni lodi
+ *			Generator se vytvari zadanim intervalu vytvareni
+ *			a pozice od a do
+ */
+class Generator : public Event { 
+	private:
+		int _diff;
+		int _place1;
+		int _place2;
+	public:
+	Generator(int diff, int place1, int place2)
+	 : _diff(diff), _place1(place1), _place2(place2)
+	{}
 
-// base class for all structures
+	void Behavior() { // --- behavior specification ---
+		int from, to;
+		if(Random() < 0.5)
+		{
+			from = _place1; to = _place2;
+		}
+		else
+		{
+			from = _place2; to = _place1;
+		}
+
+		(new CargoShip(from, to))->Activate(); // new customer 
+
+		Activate(Time+_diff); // 
+	} 
+}; 
+
+
+/**
+ * @class 	Structure
+ * @brief	Trida, ktera slouzi k dedeni ostatnim objektum
+ *			jako je reka, pristav atd. vsechno co se nalezne
+ *			na vodni ceste a nejak ovlivnuje cas lodi na ceste
+ */
 class Structure {
 protected:
 	Histogram *_table = NULL;
 	public:
-		~Structure() {
+		virtual ~Structure() {
 			if(_table != NULL)
 			{
 				_table->Output();
@@ -111,12 +165,13 @@ protected:
 			delete Q2;
 		};
 		virtual int getType() = 0;
+		virtual int getLength() = 0;
 		double Start()
 		{
 			return Time;
 		}
 
-		double End(double time)
+		void End(double time)
 		{
 			(*_table)(Time - time);
 		}
@@ -127,7 +182,12 @@ protected:
 
 };
 
-// Chamber as facility
+/**
+ * @class 	Chamber
+ * @brief	Trida, ktera modeluje plavebni komoru. V konstruktoru se nastavi
+ *			jeji nazev, delka a take promenna cekaci doba pred prepustenim nadrze.
+ *			Pote uz jej lze vyuzivat jako Facility ze simlibu.
+ */
 class Chamber : public Structure {
 	private:
 		float _height;
@@ -157,7 +217,10 @@ class Chamber : public Structure {
 			return chamber;
 		}
 
-
+		virtual int getLength()
+		{
+			return LENGTH_CHAMBER;
+		}
 
 		void PerformAction();
 		void Seize(CargoShip *ship);
@@ -166,7 +229,11 @@ class Chamber : public Structure {
 
 
 
-// Tunnel
+/**
+ * @class 	Tunnel
+ * @brief	Trida, ktera modeluje tunel. V konstruktoru se nastavi
+ *			jeho nazev, delka a pote uz jej lze vyuzivat jako Facility ze simlibu.
+ */
 class Tunnel : public Structure {
 	private:
 		int _in = 0;
@@ -196,6 +263,11 @@ class Tunnel : public Structure {
 			return tunnel;
 		}
 
+
+		virtual int getLength()
+		{
+			return (int)_len;
+		}
 		void ChangeDir();
 		void PerformAction(CargoShip *ship);
 		void Seize(CargoShip *ship);
@@ -203,7 +275,11 @@ class Tunnel : public Structure {
 		
 };
 
-// Bridge
+/**
+ * @class 	Bridge
+ * @brief	Trida, ktera modeluje most. V konstruktoru se nastavi
+ *			jeho nazev, delka a pote uz jej lze vyuzivat jako Facility ze simlibu.
+ */
 class Bridge : public Structure {
 	private:
 		int _in = 0;
@@ -234,6 +310,11 @@ class Bridge : public Structure {
 			return tunnel;
 		}
 
+		virtual int getLength()
+		{
+			return (int)_len;
+		}
+
 		void ChangeDir();
 		void PerformAction(CargoShip *ship);
 		void Seize(CargoShip *ship);
@@ -241,6 +322,12 @@ class Bridge : public Structure {
 		
 };
 
+/**
+ * @class 	Channel
+ * @brief	Trida, ktera modeluje kanal. V konstruktoru se nastavi
+ *			jeho delka. Jedina uzitecna funkce je Perform action,
+ *			ktera simuluju propluti kanalem a dane delce.
+ */
 class Channel : public Structure {
 	private:
 		int _length;
@@ -258,8 +345,18 @@ class Channel : public Structure {
 		{
 			return channel;
 		}
+
+		virtual int getLength()
+		{
+			return _length;
+		}
 };
 
+/**
+ * @class 	Channel
+ * @brief	Trida, ktera modeluje pristav. Prozatim nema zadnou
+ *			uzitecnou metodu. Slouzi pouze k ulozeni pristavu jako typu
+ */
 class Port : public Structure {
 	private:
 		float _prob;
@@ -276,8 +373,18 @@ class Port : public Structure {
 		{
 			return port;
 		}
+
+		virtual int getLength()
+		{
+			return 0;
+		}
 };
 
+/**
+ * @class 	Reka
+ * @brief	Trida, ktera modeluje reku. Podle smeru, kterym lod
+ *			rekou proplouva je udana delka jejiho prepluti
+ */
 class River : public Structure {
 	private:
 		bool _dir;
@@ -285,8 +392,9 @@ class River : public Structure {
 		int _crossTimeWithStream;
 		int _crossTimeUpStream;
 	public:
-		River(int length, bool dir) : _length(length), _dir(dir)
+		River(int length, bool dir) : _dir(dir)
 		{
+			_length = length;
 			_crossTimeWithStream = length / SPEED_WITH_STREAM;
 			_crossTimeUpStream = length / SPEED_UP_STREAM;
 		}
@@ -300,13 +408,14 @@ class River : public Structure {
 		}
 		virtual int getType()
 		{
-			return channel;
+			return river;
+		}
+
+		virtual int getLength()
+		{
+			return _length;
 		}
 };
-
-
-
-
 
 
 #endif

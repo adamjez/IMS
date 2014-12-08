@@ -1,10 +1,20 @@
-///////////////////////
-//	IMS projekt
-//	Autor: xjezad00
-///////////////////////
+/**
+ * @file 	parser.cc
+ * @author	Adam Jez (xjezad00@stud.fit.vutbr.cz)
+ * @author	Roman Blanco (xblanc01@stud.fit.vutbr.cz)
+ * @date 	7.12.2014
+ * @brief	Metody pro tridy, ktere parsuji zdrojove
+ *			soubory a vraci je ve vektoru
+ */
 
 #include "parser.h"
 
+/**
+ * Funkce vrati vektor hodnot v tretim parametru
+ * @param	vec 	prohledavany seznam
+ * @param 	second 	cislo, ktere se v seznamu hleda
+ * @param 	out		vektor hodnot, ktery byli v paru s hledanou hodnotou
+ */
 void getFirstBySecond(vector<pair<int, int>> *vec, int second, vector<int> *out)
 {
 	out->clear();
@@ -16,7 +26,12 @@ void getFirstBySecond(vector<pair<int, int>> *vec, int second, vector<int> *out)
 
 }
 
-
+/**
+ * Funkce vrati vektor hodnot v tretim parametru
+ * @param	vec 	prohledavany seznam
+ * @param 	first 	cislo, ktere se v seznamu hleda
+ * @param 	out		vektor hodnot, ktery byli v paru s hledanou hodnotou
+ */
 void getSecondByFirst(vector<pair<int, int>> *vec, int first, vector<int> *out)
 {
 	out->clear();
@@ -28,6 +43,12 @@ void getSecondByFirst(vector<pair<int, int>> *vec, int first, vector<int> *out)
 
 }
 
+/**
+ * Funkce vrati mozne nasledovniky/predchazejici zadane hodnoty
+ * @param	vec 	prohledavany seznam
+ * @param 	item 	cislo, ktere se v seznamu hleda
+ * @param 	out		vektor hodnot, ktery byli v paru s hledanou hodnotou
+ */
 void getNext(vector<pair<int, int>> *vec, int item, vector<vector<pair<int, int>>> *out)
 {
 	for(auto conn = vec->begin(); conn != vec->end(); ++conn)
@@ -41,6 +62,13 @@ void getNext(vector<pair<int, int>> *vec, int item, vector<vector<pair<int, int>
 
 }
 
+/**
+ * Vrati nasledujici hodnotu ze seznamu po hodnote from 
+ * @param	vec 	prohledavany seznam
+ * @param 	from 	cislo od ktereho se hleda nasledujici
+ * @param 	to		cislo, ke kteremu se chceme dostat
+ * @return	vrati hodnotu nasledujiciho prvku, kdyz nenajde, vrati -1
+ */
 int findNext(vector<pair<int, int>> *vec, int from, int to)
 {
 	vector<vector<pair<int, int>>> result;
@@ -52,7 +80,7 @@ int findNext(vector<pair<int, int>> *vec, int from, int to)
 		cout << path->front().first << "  " << path->front().second << endl;
 	}*/
 
-	int size; 
+	u_int size; 
 	bool change;
 	while(true)
 	{
@@ -83,14 +111,12 @@ int findNext(vector<pair<int, int>> *vec, int from, int to)
 				{ 
 					// Nasli jsem cestu
 					path->push_back(make_pair(conn->first, conn->second));
-					//cout << "MAM: " << find.first << "  " << find.second << " Pridavam: " << conn->first << "  " << conn->second << endl;
 				}
 
 				if(from > to && conn->second == find.first && conn->first != find.second)
 				{
 					// Nasli jsem cestu
 					path->push_back(make_pair(conn->first, conn->second));
-					//cout << "MAM: " << find.first << "  " << find.second << " Pridavam: " << conn->first << "  " << conn->second << endl;
 				}
 			}	
 
@@ -106,6 +132,10 @@ int findNext(vector<pair<int, int>> *vec, int from, int to)
 	return -1;
 }
 
+/**
+ * Funkce projde zdrojovy soubor ve formatu: "X Y\n", kde X a Y jsou cisla spojeni
+ * @return	vrati seznam paru spojeni
+ */
 vector<pair<int, int>> ConnectionParser::Run()
 {
 	int x,y;
@@ -124,6 +154,11 @@ vector<pair<int, int>> ConnectionParser::Run()
 	return result;
 }
 
+/**
+ * Funkce projde zdrojovy soubor ve formatu: "A STR X Y Z\n", kde X, Y a Z 
+ * jsou cisla spojene s pridavanym objektem, STR je nazev objektu a A je cislo typu objektu
+ * @return	vrati seznam objektu (most, reka, pristav, apod.)
+ */
 vector<Structure *> StructuresParser::Run()
 {
 	int type;
@@ -189,6 +224,10 @@ vector<Structure *> StructuresParser::Run()
 	return result;
 }
 
+/**
+ * Funkce projde zdrojovy soubor ve formatu: "X Y A\n", kde X, Y jsou id objektu a A je pocet tisic tun
+ * @return	vrati seznam dvojitych paru, obsahujici id objektu od do a pocet tisic tun mezi nimi za rok
+ */
 vector<pair<pair<int, int>, float>> TrafficParser::Run()
 {
 	int id1, id2;
