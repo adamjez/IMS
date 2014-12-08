@@ -1,18 +1,8 @@
 all: dokumentace.pdf
 
-%.eps: %.png
-	convert $< $@
-	pdftops -eps $@
-
-dokumentace.dvi: dokumentace.tex
-	latex dokumentace.tex
-
-dokumentace.ps: dokumentace.dvi
-	dvips dokumentace.dvi
-
-dokumentace.pdf: dokumentace.ps
-	ps2pdf dokumentace.ps
+dokumentace.pdf: dokumentace.tex
+	pdflatex dokumentace.tex
 
 .PHONY: clean
 clean:
-	rm -fr *.aux *.log *.tex# *.ps *.dvi *.out *.pdf
+	rm -fr *.aux *.toc *.log *.tex# *.ps *.dvi *.out *.pdf
